@@ -1,0 +1,46 @@
+{
+  "name": "helpdesk",
+  "version": "1.0.0",
+  "description": "Helpdesk Service - Web Application of technical support department",
+  "author": {
+    "name": "Dmitrii Baklai",
+    "email": "d.n.baklai@gmail.com",
+    "url": "https://baklai.github.io"
+  },
+  "config": {
+    "app": {
+      "name": "Helpdesk Service",
+      "short_name": "HD",
+      "description": "Web Application of technical support department"
+    },
+    "author": {
+      "name": "Dmitrii Baklai",
+      "email": "d.n.baklai@gmail.com",
+      "url": "https://baklai.github.io",
+      "social": {
+        "github": "https://github.com/baklai",
+        "facebook": "https://www.facebook.com/dmitrii.baklai/",
+        "linkedin": "https://www.linkedin.com/in/dmitrii-baklai-1370a3170/"
+      }
+    }
+  },
+  "homepage": "https://github.com/baklai/helpdesk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baklai/helpdesk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baklai/helpdesk/issues"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.15.0",
+    "npm": ">=8.5.5"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1"
+  }
+}
