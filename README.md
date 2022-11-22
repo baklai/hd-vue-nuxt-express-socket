@@ -24,6 +24,15 @@ git clone
 $ npm install
 ```
 
+## Project env variables
+
+| Key                | Comment          |
+| ------------------ | ---------------- |
+| `MONGO_URI`        | Mongo url        |
+| `BCRYPT_SALT`      | BCRYPT SALT      |
+| `JWT_SECRET_KEY`   | JWT_SECRET_KEY   |
+| `TOKEN_EXPIRES_IN` | TOKEN_EXPIRES_IN |
+
 ## Run dev application
 
 ```bash
