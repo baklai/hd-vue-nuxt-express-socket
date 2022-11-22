@@ -2,7 +2,7 @@
 
 Web Application of technical support department.
 
-<img src="/public/social-preview.png">
+<img src="/static/img/social-preview.png">
 
 ## Demo application -> [Helpdesk service](https://helpdesk-service.herokuapp.com/)
 
