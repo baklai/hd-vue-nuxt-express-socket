@@ -1,5 +1,5 @@
 <template>
-  <v-dialog eager persistent scrollable v-model="dialog" max-width="900" overlay-color="#525252">
+  <v-dialog eager persistent scrollable v-model="dialog" max-width="600" overlay-color="#525252">
     <v-card>
       <v-card-title class="pt-0">
         <v-list flat>
@@ -104,22 +104,19 @@
                   item-key="scope"
                   show-select
                   fixed-header
-                  v-model="selected"
+                  disable-pagination
+                  hide-default-footer
+                  v-model="user.scope"
                   :headers="headers"
                   :items="$helpdesk.scopes"
                   :single-select="false"
-                  :footer-props="{
-                    itemsPerPageOptions: [10, 15, 20, 25, 50, -1],
-                    itemsPerPageText: $t('Rows per page'),
-                    showFirstLastPage: true,
-                    showCurrentPage: true
-                  }"
-                  :height="400"
+                  :height="300"
                   :loading-text="$t('Loading please wait')"
                   :no-data-text="$t('No matching records found')"
+                  class="pa-4"
                 >
                   <template v-slot:top>
-                    <v-toolbar flat>
+                    <v-app-bar dense flat class="px-0">
                       <v-icon left>
                         {{
                           user.scope.length
@@ -127,49 +124,21 @@
                             : 'mdi-account-lock-outline'
                         }}
                       </v-icon>
-                      <v-list-item>
-                        <v-list-item-title class="overline">
-                          {{ $t('Scope list') }}
-                        </v-list-item-title>
-                      </v-list-item>
+                      <v-toolbar-title>
+                        {{ $t('Scope list') }}
+                      </v-toolbar-title>
                       <v-spacer />
-                      <v-responsive width="260">
+                      <v-responsive max-width="200">
                         <CustomFilterInput v-model="filters.scope" :label="$t('Search in scope')" />
                       </v-responsive>
-                      <!-- <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-on="on" v-bind="attrs" @click="cleanFilters()" class="mx-2">
-                            <v-icon> mdi-filter-remove-outline </v-icon>
-                          </v-btn>
-                        </template>
-                        <span> {{ $t('Clear filters') }} </span>
-                      </v-tooltip> -->
-                      <!-- <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-on="on" v-bind="attrs" @click="getItems" class="mx-2">
-                            <v-icon> mdi-cached </v-icon>
-                          </v-btn>
-                        </template>
-                        <span> {{ $t('Update records') }} </span>
-                      </v-tooltip> -->
-                      <!-- <v-tooltip bottom v-if="$hasScope('api:logger:remove:all')">
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-on="on" v-bind="attrs" @click="deleteItems()" class="mx-2">
-                            <v-icon> mdi-trash-can-outline </v-icon>
-                          </v-btn>
-                        </template>
-                        <span> {{ $t('Delete all records') }} </span>
-                      </v-tooltip> -->
+                    </v-app-bar>
+                  </template>
 
-                      <!-- <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-btn icon v-on="on" v-bind="attrs" class="mx-2">
-                            <v-icon> mdi-cog-outline </v-icon>
-                          </v-btn>
-                        </template>
-                        <span> {{ $t('Options') }} </span>
-                      </v-tooltip> -->
-                    </v-toolbar>
+                  <template v-slot:[`item.data-table-select`]="{ isSelected, select }">
+                    <v-simple-checkbox
+                      :value="isSelected"
+                      @input="select($event)"
+                    ></v-simple-checkbox>
                   </template>
 
                   <template v-slot:[`item.scope`]="{ item }">
@@ -380,3 +349,12 @@ export default {
   }
 };
 </script>
+
+<style>
+*::before {
+  background: none !important;
+}
+*::after {
+  background: none !important;
+}
+</style>
