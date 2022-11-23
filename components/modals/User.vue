@@ -98,9 +98,94 @@
                   />
                 </v-card-text>
               </v-card>
-              <v-card class="mx-auto" flat>
-                <v-card-title>
-                  <v-icon left>
+              <v-card class="mx-auto mx-4" flat>
+                <v-data-table
+                  dense
+                  item-key="scope"
+                  show-select
+                  fixed-header
+                  v-model="selected"
+                  :headers="headers"
+                  :items="$helpdesk.scopes"
+                  :single-select="false"
+                  :footer-props="{
+                    itemsPerPageOptions: [10, 15, 20, 25, 50, -1],
+                    itemsPerPageText: $t('Rows per page'),
+                    showFirstLastPage: true,
+                    showCurrentPage: true
+                  }"
+                  :height="400"
+                  :loading-text="$t('Loading please wait')"
+                  :no-data-text="$t('No matching records found')"
+                >
+                  <template v-slot:top>
+                    <v-toolbar flat>
+                      <v-icon left>
+                        {{
+                          user.scope.length
+                            ? 'mdi-account-lock-open-outline'
+                            : 'mdi-account-lock-outline'
+                        }}
+                      </v-icon>
+                      <v-list-item>
+                        <v-list-item-title class="overline">
+                          {{ $t('Scope list') }}
+                        </v-list-item-title>
+                      </v-list-item>
+                      <v-spacer />
+                      <v-responsive width="260">
+                        <CustomFilterInput v-model="filters.scope" :label="$t('Search in scope')" />
+                      </v-responsive>
+                      <!-- <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-on="on" v-bind="attrs" @click="cleanFilters()" class="mx-2">
+                            <v-icon> mdi-filter-remove-outline </v-icon>
+                          </v-btn>
+                        </template>
+                        <span> {{ $t('Clear filters') }} </span>
+                      </v-tooltip> -->
+                      <!-- <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-on="on" v-bind="attrs" @click="getItems" class="mx-2">
+                            <v-icon> mdi-cached </v-icon>
+                          </v-btn>
+                        </template>
+                        <span> {{ $t('Update records') }} </span>
+                      </v-tooltip> -->
+                      <!-- <v-tooltip bottom v-if="$hasScope('api:logger:remove:all')">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-on="on" v-bind="attrs" @click="deleteItems()" class="mx-2">
+                            <v-icon> mdi-trash-can-outline </v-icon>
+                          </v-btn>
+                        </template>
+                        <span> {{ $t('Delete all records') }} </span>
+                      </v-tooltip> -->
+
+                      <!-- <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn icon v-on="on" v-bind="attrs" class="mx-2">
+                            <v-icon> mdi-cog-outline </v-icon>
+                          </v-btn>
+                        </template>
+                        <span> {{ $t('Options') }} </span>
+                      </v-tooltip> -->
+                    </v-toolbar>
+                  </template>
+
+                  <template v-slot:[`item.scope`]="{ item }">
+                    <v-chip label small>
+                      {{ item.scope }}
+                    </v-chip>
+                  </template>
+                  <template v-slot:[`item.comment`]="{ item }">
+                    <span class="body-2">
+                      {{ item.comment }}
+                    </span>
+                  </template>
+                </v-data-table>
+
+                <!-- <v-card-title>
+                  <v-icon left> 
                     {{
                       user.scope.length
                         ? 'mdi-account-lock-open-outline'
@@ -135,9 +220,9 @@
                     </template>
                     <span> {{ $t('Select all scopes') }} </span>
                   </v-tooltip>
-                </v-card-title>
+                </v-card-title> -->
                 <v-divider />
-                <v-card-text>
+                <!-- <v-card-text>
                   <table style="width: 100%">
                     <tr>
                       <th>Permission</th>
@@ -150,8 +235,8 @@
                       </td>
                       <td>{{ item.comment }}</td>
                     </tr>
-                  </table>
-                  <!-- <v-virtual-scroll
+                  </table> -->
+                <!-- <v-virtual-scroll
                     :items="$helpdesk.scopes"
                     item-height="48"
                     height="400"
@@ -173,7 +258,7 @@
                       />
                     </template>
                   </v-virtual-scroll> -->
-                </v-card-text>
+                <!-- </v-card-text> -->
               </v-card>
             </v-col>
           </v-row>
@@ -195,6 +280,10 @@ export default {
       eyepass: false,
       dialog: false,
       IDItem: null,
+
+      filters: {
+        scope: ''
+      },
 
       user: {
         name: null,
@@ -221,7 +310,17 @@ export default {
             (v && v.length >= 4 && v.length <= 21) ||
             this.$t('Password must be equal or more than 4 characters')
         ]
-      }
+      },
+
+      singleSelect: false,
+      selected: [],
+      headers: [
+        {
+          text: 'Scope key',
+          value: 'scope'
+        },
+        { text: 'Comment scope', value: 'comment' }
+      ]
     };
   },
 
