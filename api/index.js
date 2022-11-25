@@ -67,7 +67,14 @@ module.exports = (server, options) => {
 
   const onConnection = function (socket) {
     socket.use(authMiddleware(socket, ['auth:signin']));
-    socket.use(scopeMiddleware(socket, ['auth:signin', 'auth:signout']));
+    socket.use(
+      scopeMiddleware(socket, [
+        'auth:signin',
+        'auth:signout',
+        'notification:find:all',
+        'notification:remove:one'
+      ])
+    );
     socket.use(loggerMiddleware(socket, ['logger:find:all', 'logger:remove:all']));
 
     authHandler(io, socket);
