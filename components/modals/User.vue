@@ -109,14 +109,14 @@
                   v-model="user.scope"
                   :headers="headers"
                   :items="$helpdesk.scopes"
-                  :single-select="false"
                   :height="300"
+                  :selected="user.scope.scope"
                   :loading-text="$t('Loading please wait')"
                   :no-data-text="$t('No matching records found')"
                   class="pa-4"
                 >
                   <template v-slot:top>
-                    <v-app-bar dense flat class="px-0">
+                    <v-app-bar dense flat class="pa-0">
                       <v-icon left>
                         {{
                           user.scope.length
@@ -126,6 +126,7 @@
                       </v-icon>
                       <v-toolbar-title>
                         {{ $t('Scope list') }}
+                        ({{ user.scope.length }}/{{ $helpdesk.scopes.length }})
                       </v-toolbar-title>
                       <v-spacer />
                       <v-responsive max-width="200">
@@ -152,82 +153,7 @@
                     </span>
                   </template>
                 </v-data-table>
-
-                <!-- <v-card-title>
-                  <v-icon left> 
-                    {{
-                      user.scope.length
-                        ? 'mdi-account-lock-open-outline'
-                        : 'mdi-account-lock-outline'
-                    }}
-                  </v-icon>
-                  {{ $t('Scope list') }}
-                  <span class="mx-2">
-                    ( {{ user.scope.length }} / {{ $helpdesk.scopes.length }} )
-                  </span>
-                  <v-spacer />
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-on="on" v-bind="attrs" class="mx-2" @click="user.scope = []">
-                        <v-icon> mdi-checkbox-multiple-blank-outline </v-icon>
-                      </v-btn>
-                    </template>
-                    <span> {{ $t('Clear all scopes') }} </span>
-                  </v-tooltip>
-
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        icon
-                        v-on="on"
-                        v-bind="attrs"
-                        @click="user.scope = $helpdesk.scopes.map((item) => item.scope)"
-                      >
-                        <v-icon> mdi-checkbox-multiple-marked-outline </v-icon>
-                      </v-btn>
-                    </template>
-                    <span> {{ $t('Select all scopes') }} </span>
-                  </v-tooltip>
-                </v-card-title> -->
                 <v-divider />
-                <!-- <v-card-text>
-                  <table style="width: 100%">
-                    <tr>
-                      <th>Permission</th>
-                      <th>Description</th>
-                      <th>Country</th>
-                    </tr>
-                    <tr v-for="item of $helpdesk.scopes" :key="item.scope">
-                      <td>
-                        <v-chip x-small label>{{ item.scope }}</v-chip>
-                      </td>
-                      <td>{{ item.comment }}</td>
-                    </tr>
-                  </table> -->
-                <!-- <v-virtual-scroll
-                    :items="$helpdesk.scopes"
-                    item-height="48"
-                    height="400"
-                  >
-                    <template v-slot:default="{ item }">
-                      <v-subheader v-if="!item.scope">
-                        <v-spacer />
-                        {{ item.comment.toUpperCase() }}
-                      </v-subheader>
-                      <v-checkbox
-                        dense
-                        persistent-hint
-                        v-model="user.scope"
-                        :label="item.comment"
-                        :hint="`Score key: ${item.scope}`"
-                        :value="item.scope"
-                        class="px-2"
-                        v-else
-                      />
-                    </template>
-                  </v-virtual-scroll> -->
-                <!-- </v-card-text> -->
               </v-card>
             </v-col>
           </v-row>
@@ -281,16 +207,31 @@ export default {
         ]
       },
 
-      singleSelect: false,
-      selected: [],
-      headers: [
-        {
-          text: 'Scope key',
-          value: 'scope'
-        },
-        { text: 'Comment scope', value: 'comment' }
-      ]
+      selected: []
     };
+  },
+
+  computed: {
+    headers() {
+      return [
+        {
+          text: this.$t('Scope key'),
+          value: 'scope',
+          align: 'start',
+          width: '180px',
+          filterable: true,
+          sortable: true
+        },
+        {
+          text: this.$t('Comment scope'),
+          value: 'comment',
+          align: 'start',
+          width: '180px',
+          filterable: true,
+          sortable: true
+        }
+      ];
+    }
   },
 
   methods: {
