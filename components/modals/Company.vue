@@ -43,7 +43,7 @@
               </v-list-item-icon>
               <v-list-item-title> {{ $t('Create record') }} </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onDelete()" v-if="$hasScope('api:company:remove:one')">
+            <v-list-item @click="onDelete()" v-if="$hasScope('company:remove:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>

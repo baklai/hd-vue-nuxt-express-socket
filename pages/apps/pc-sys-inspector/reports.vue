@@ -1,11 +1,7 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete
-      ref="delete"
-      @closeEvent="getItems"
-      v-if="$hasScope('api:inspector:remove:one')"
-    />
-    <ReportsModalSysInspector ref="modal" v-if="$hasScope('api:inspector:find:one')" />
+    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('inspector:remove:one')" />
+    <ReportsModalSysInspector ref="modal" v-if="$hasScope('inspector:find:one')" />
     <v-data-table
       dense
       fixed-header
@@ -50,7 +46,7 @@
             </template>
             <span> {{ $t('Clear filters') }} </span>
           </v-tooltip>
-          <v-tooltip bottom v-if="$hasScope('api:tool:get:inspector')">
+          <v-tooltip bottom v-if="$hasScope('tool:get:inspector')">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-on="on" v-bind="attrs" @click="getVBSInspector" class="mx-2">
                 <v-icon> mdi-plus-circle-outline </v-icon>
@@ -125,7 +121,7 @@
               <v-icon small right> mdi-chevron-up </v-icon>
             </v-btn>
           </template>
-          <v-list flat dense v-if="$hasScope('app:inspector:export:table')">
+          <v-list flat dense v-if="$hasScope('inspector:export:table')">
             <v-list-item
               @click="
                 $store.dispatch('exportCSV', {
@@ -155,7 +151,7 @@
           <v-list flat dense>
             <HostDefActions :host="item.host" />
             <v-divider />
-            <v-list-item v-if="$hasScope('api:inspector:remove:one')" @click="onItemDel(item.id)">
+            <v-list-item v-if="$hasScope('inspector:remove:one')" @click="onItemDel(item.id)">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -279,7 +275,7 @@
         </v-chip>
       </template>
     </v-data-table>
-    <ReportsDrawerSysInspector ref="drawer" v-if="$hasScope('api:inspector:find:one')" />
+    <ReportsDrawerSysInspector ref="drawer" v-if="$hasScope('inspector:find:one')" />
   </v-container>
 </template>
 
@@ -510,19 +506,19 @@ export default {
     },
 
     onItem(id) {
-      if (this.$hasScope('api:inspector:find:one')) {
+      if (this.$hasScope('inspector:find:one')) {
         this.$refs.modal.onItem(id);
       }
     },
 
     onItemDrawer(id) {
-      if (this.$hasScope('api:inspector:find:one')) {
+      if (this.$hasScope('inspector:find:one')) {
         this.$refs.drawer.onItem(id);
       }
     },
 
     onItemDel(id) {
-      if (this.$hasScope('api:inspector:remove:one')) {
+      if (this.$hasScope('inspector:remove:one')) {
         this.$refs.delete.onConfirm(id, 'inspector');
       }
     },

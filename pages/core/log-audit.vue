@@ -53,7 +53,7 @@
             </template>
             <span> {{ $t('Update records') }} </span>
           </v-tooltip>
-          <v-tooltip bottom v-if="$hasScope('api:logger:remove:all')">
+          <v-tooltip bottom v-if="$hasScope('logger:remove:all')">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-on="on" v-bind="attrs" @click="deleteItems()" class="mx-2">
                 <v-icon> mdi-trash-can-outline </v-icon>
@@ -104,7 +104,7 @@
               </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="deleteItems()" v-if="$hasScope('api:logger:remove:all')">
+            <v-list-item @click="deleteItems()" v-if="$hasScope('logger:remove:all')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -114,7 +114,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-menu top offset-y v-if="$hasScope('app:logger:export:table')">
+        <v-menu top offset-y v-if="$hasScope('logger:export:table')">
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
               <v-icon small left> mdi-file-chart-outline </v-icon>
@@ -124,7 +124,7 @@
           </template>
           <v-list flat dense>
             <v-list-item
-              v-if="$hasScope('app:logger:export:table')"
+              v-if="$hasScope('logger:export:table')"
               @click="
                 $store.dispatch('exportCSV', {
                   delimiter: ';',
@@ -176,7 +176,7 @@
             </v-btn>
           </template>
           <v-list flat dense>
-            <v-list-item @click="getItems()" v-if="$hasScope('api:logger:find:all')">
+            <v-list-item @click="getItems()" v-if="$hasScope('logger:find:all')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-cached </v-icon>
               </v-list-item-icon>
@@ -184,7 +184,7 @@
                 {{ $t('Update records') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="deleteItems()" v-if="$hasScope('api:logger:remove:all')">
+            <v-list-item @click="deleteItems()" v-if="$hasScope('logger:remove:all')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -372,7 +372,7 @@ export default {
     },
 
     async deleteItems() {
-      if (this.$hasScope('api:logger:remove:all')) {
+      if (this.$hasScope('logger:remove:all')) {
         try {
           await this.$store.dispatch('api/logger/removeAll');
           this.$toast.success(this.$t('The list of records has been removed'));

@@ -1,5 +1,5 @@
 <template>
-  <v-container full-height class="py-8" v-if="$hasScope('api:statistic:inspector')">
+  <v-container full-height class="py-8" v-if="$hasScope('statistic:inspector')">
     <v-row class="fill-height" align="center" justify="center">
       <v-col cols="12" xl="4" lg="3" md="4" sm="6">
         <v-card outlined class="pa-2">

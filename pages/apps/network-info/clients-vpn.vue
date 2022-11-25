@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('api:vpn:remove:one')" />
-    <ModalsVPN ref="vpn" @closeEvent="getItems" v-if="$hasScope('api:vpn:find:one')" />
+    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('vpn:remove:one')" />
+    <ModalsVPN ref="vpn" @closeEvent="getItems" v-if="$hasScope('vpn:find:one')" />
     <v-data-table
       dense
       fixed-header
@@ -46,7 +46,7 @@
             </template>
             <span> {{ $t('Clear filters') }} </span>
           </v-tooltip>
-          <v-tooltip bottom v-if="$hasScope('api:vpn:create:one')">
+          <v-tooltip bottom v-if="$hasScope('vpn:create:one')">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-on="on" v-bind="attrs" class="mx-2" @click="onItem(null)">
                 <v-icon> mdi-plus-circle-outline </v-icon>
@@ -105,7 +105,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-menu top offset-y v-if="$hasScope('app:vpn:export:table')">
+        <v-menu top offset-y v-if="$hasScope('vpn:export:table')">
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
               <v-icon small left> mdi-file-chart-outline </v-icon>
@@ -121,7 +121,7 @@
                   fileName: 'vpntable'
                 })
               "
-              v-if="$hasScope('app:vpn:export:table')"
+              v-if="$hasScope('vpn:export:table')"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-content-save-outline </v-icon>
@@ -245,7 +245,7 @@
           <v-list flat dense>
             <HostDefActions v-if="item.ipaddress" :host="item.ipaddress" />
             <v-divider v-if="item.ipaddress" />
-            <v-list-item @click="onItem(item.id)" v-if="$hasScope('api:vpn:update:one')">
+            <v-list-item @click="onItem(item.id)" v-if="$hasScope('vpn:update:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-note-edit-outline </v-icon>
               </v-list-item-icon>
@@ -253,7 +253,7 @@
                 {{ $t('Edit record') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item v-if="$hasScope('api:vpn:remove:one')" @click="onItemDel(item.id)">
+            <v-list-item v-if="$hasScope('vpn:remove:one')" @click="onItemDel(item.id)">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -318,7 +318,7 @@
         {{ item.dateClose | dateToStr }}
       </template>
     </v-data-table>
-    <ReportsDrawerVPNClient ref="drawer" v-if="$hasScope('api:vpn:find:one')" />
+    <ReportsDrawerVPNClient ref="drawer" v-if="$hasScope('vpn:find:one')" />
   </v-container>
 </template>
 
@@ -636,19 +636,19 @@ export default {
     },
 
     onItem(id) {
-      if (this.$hasScope('api:vpn:find:one')) {
+      if (this.$hasScope('vpn:find:one')) {
         this.$refs.vpn.onItem(id);
       }
     },
 
     onItemDel(id) {
-      if (this.$hasScope('api:vpn:remove:one')) {
+      if (this.$hasScope('vpn:remove:one')) {
         this.$refs.delete.onConfirm(id, 'vpn');
       }
     },
 
     onDrawer(id) {
-      if (this.$hasScope('api:vpn:find:one')) {
+      if (this.$hasScope('vpn:find:one')) {
         this.$refs.drawer.onItem(id);
       }
     },

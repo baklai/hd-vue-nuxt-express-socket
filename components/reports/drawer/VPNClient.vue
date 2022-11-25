@@ -23,7 +23,7 @@
             <v-list flat dense>
               <HostDefActions v-if="report.ipaddress" :host="report.ipaddress" />
               <v-divider v-if="report.ipaddress" />
-              <v-list-item @click="onItem(report.id)" v-if="$hasScope('api:vpn:update:one')">
+              <v-list-item @click="onItem(report.id)" v-if="$hasScope('vpn:update:one')">
                 <v-list-item-icon class="mr-1">
                   <v-icon small> mdi-note-edit-outline </v-icon>
                 </v-list-item-icon>
@@ -31,7 +31,7 @@
                   {{ $t('Edit record') }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item v-if="$hasScope('api:vpn:remove:one')" @click="onItemDel(report.id)">
+              <v-list-item v-if="$hasScope('vpn:remove:one')" @click="onItemDel(report.id)">
                 <v-list-item-icon class="mr-1">
                   <v-icon small> mdi-trash-can-outline </v-icon>
                 </v-list-item-icon>

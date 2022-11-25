@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('api:request:remove:one')" />
-    <ModalsRequest ref="request" @closeEvent="getItems" v-if="$hasScope('api:request:find:one')" />
+    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('request:remove:one')" />
+    <ModalsRequest ref="request" @closeEvent="getItems" v-if="$hasScope('request:find:one')" />
     <v-data-table
       dense
       item-key="id"
@@ -48,7 +48,7 @@
             </template>
             <span> {{ $t('Clear filters') }} </span>
           </v-tooltip>
-          <v-tooltip bottom v-if="$hasScope('api:request:create:one')">
+          <v-tooltip bottom v-if="$hasScope('request:create:one')">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-on="on" v-bind="attrs" @click="onItem(null)" class="mx-2">
                 <v-icon> mdi-plus-circle-outline </v-icon>
@@ -105,7 +105,7 @@
                 {{ $t('Update records') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItem(null)" v-if="$hasScope('api:request:create:one')">
+            <v-list-item @click="onItem(null)" v-if="$hasScope('request:create:one')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-plus-circle-outline </v-icon>
               </v-list-item-icon>
@@ -115,7 +115,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-menu top offset-y v-if="$hasScope('api:request:export:table')">
+        <v-menu top offset-y v-if="$hasScope('request:export:table')">
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
               <v-icon small left> mdi-file-chart-outline </v-icon>
@@ -125,7 +125,7 @@
           </template>
           <v-list flat dense>
             <v-list-item
-              v-if="$hasScope('api:request:export:table')"
+              v-if="$hasScope('request:export:table')"
               @click="
                 $store.dispatch('exportCSV', {
                   delimiter: ';',
@@ -144,12 +144,12 @@
         </v-menu>
 
         <v-menu top offset-y>
-          <ModalsCompany ref="company" v-if="$hasScope('api:company:find:all')" />
-          <ModalsBranch ref="branch" v-if="$hasScope('api:branch:find:all')" />
-          <ModalsEnterprise ref="enterprise" v-if="$hasScope('api:enterprise:find:all')" />
-          <ModalsDepartment ref="department" v-if="$hasScope('api:department:find:all')" />
-          <ModalsLocation ref="location" v-if="$hasScope('api:location:find:all')" />
-          <ModalsPosition ref="position" v-if="$hasScope('api:position:find:all')" />
+          <ModalsCompany ref="company" v-if="$hasScope('company:find:all')" />
+          <ModalsBranch ref="branch" v-if="$hasScope('branch:find:all')" />
+          <ModalsEnterprise ref="enterprise" v-if="$hasScope('enterprise:find:all')" />
+          <ModalsDepartment ref="department" v-if="$hasScope('department:find:all')" />
+          <ModalsLocation ref="location" v-if="$hasScope('location:find:all')" />
+          <ModalsPosition ref="position" v-if="$hasScope('position:find:all')" />
 
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
@@ -159,10 +159,7 @@
             </v-btn>
           </template>
           <v-list flat dense>
-            <v-list-item
-              @click="$refs.company.onItem(null)"
-              v-if="$hasScope('api:company:find:all')"
-            >
+            <v-list-item @click="$refs.company.onItem(null)" v-if="$hasScope('company:find:all')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -170,7 +167,7 @@
                 {{ $t('DB Company') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.branch.onItem(null)" v-if="$hasScope('api:branch:find:all')">
+            <v-list-item @click="$refs.branch.onItem(null)" v-if="$hasScope('branch:find:all')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -180,7 +177,7 @@
             </v-list-item>
             <v-list-item
               @click="$refs.enterprise.onItem(null)"
-              v-if="$hasScope('api:enterprise:find:all')"
+              v-if="$hasScope('enterprise:find:all')"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
@@ -191,7 +188,7 @@
             </v-list-item>
             <v-list-item
               @click="$refs.department.onItem(null)"
-              v-if="$hasScope('api:department:find:all')"
+              v-if="$hasScope('department:find:all')"
             >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
@@ -200,10 +197,7 @@
                 {{ $t('DB Department') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item
-              @click="$refs.location.onItem(null)"
-              v-if="$hasScope('api:location:find:all')"
-            >
+            <v-list-item @click="$refs.location.onItem(null)" v-if="$hasScope('location:find:all')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -211,10 +205,7 @@
                 {{ $t('DB Location') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item
-              @click="$refs.position.onItem(null)"
-              v-if="$hasScope('api:position:find:all')"
-            >
+            <v-list-item @click="$refs.position.onItem(null)" v-if="$hasScope('position:find:all')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -353,7 +344,7 @@
           </template>
           <v-list flat dense>
             <HostDefActions v-if="item.ipaddress" :host="item.ipaddress" />
-            <v-list-item @click="onItem(item.id)" v-if="$hasScope('api:request:update:one')">
+            <v-list-item @click="onItem(item.id)" v-if="$hasScope('request:update:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-pencil-outline </v-icon>
               </v-list-item-icon>
@@ -361,7 +352,7 @@
                 {{ $t('Edit record') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('api:request:remove:one')">
+            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('request:remove:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -428,7 +419,7 @@
         {{ item.workerClose ? item.workerClose.name : '-' }}
       </template>
     </v-data-table>
-    <ReportsDrawerRequest ref="drawer" v-if="$hasScope('api:request:find:one')" />
+    <ReportsDrawerRequest ref="drawer" v-if="$hasScope('request:find:one')" />
   </v-container>
 </template>
 
@@ -723,19 +714,19 @@ export default {
     },
 
     onDrawer(value) {
-      if (this.$hasScope('api:request:find:one')) {
+      if (this.$hasScope('request:find:one')) {
         this.$refs.drawer.onItem(value.id);
       }
     },
 
     onItem(id) {
-      if (this.$hasScope('api:request:find:one')) {
+      if (this.$hasScope('request:find:one')) {
         this.$refs.request.onItem(id);
       }
     },
 
     onItemDel(id) {
-      if (this.$hasScope('api:request:remove:one')) {
+      if (this.$hasScope('request:remove:one')) {
         this.$refs.delete.onConfirm(id, 'request');
       }
     },

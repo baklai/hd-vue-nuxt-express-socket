@@ -1,11 +1,7 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('api:channel:remove:one')" />
-    <ModalsChannel
-      ref="channel"
-      @closeEvent="getItems"
-      v-if="$hasScope('api:channel:remove:one')"
-    />
+    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('channel:remove:one')" />
+    <ModalsChannel ref="channel" @closeEvent="getItems" v-if="$hasScope('channel:remove:one')" />
     <v-data-table
       dense
       item-key="id"
@@ -51,7 +47,7 @@
             </template>
             <span> {{ $t('Clear filters') }} </span>
           </v-tooltip>
-          <v-tooltip bottom v-if="$hasScope('api:channel:create:one')">
+          <v-tooltip bottom v-if="$hasScope('channel:create:one')">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon v-on="on" v-bind="attrs" @click="onItem(null)" class="mx-2">
                 <v-icon> mdi-plus-circle-outline </v-icon>
@@ -108,7 +104,7 @@
                 {{ $t('Clear filters') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItem(null)" v-if="$hasScope('api:channel:create:one')">
+            <v-list-item @click="onItem(null)" v-if="$hasScope('channel:create:one')">
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-plus-circle-outline </v-icon>
               </v-list-item-icon>
@@ -118,7 +114,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-menu top offset-y v-if="$hasScope('app:channel:export:table')">
+        <v-menu top offset-y v-if="$hasScope('channel:export:table')">
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
               <v-icon small left> mdi-file-chart-outline </v-icon>
@@ -128,7 +124,7 @@
           </template>
           <v-list flat dense>
             <v-list-item
-              v-if="$hasScope('app:channel:export:table')"
+              v-if="$hasScope('channel:export:table')"
               @click="
                 $store.dispatch('exportCSV', {
                   delimiter: ';',
@@ -160,7 +156,7 @@
             </v-btn>
           </template>
           <v-list flat dense>
-            <v-list-item @click="onItem(item.id)" v-if="$hasScope('api:channel:update:one')">
+            <v-list-item @click="onItem(item.id)" v-if="$hasScope('channel:update:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-note-edit-outline </v-icon>
               </v-list-item-icon>
@@ -168,7 +164,7 @@
                 {{ $t('Edit record') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('api:channel:remove:one')">
+            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('channel:remove:one')">
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -344,13 +340,13 @@ export default {
     },
 
     onItem(id) {
-      if (this.$hasScope('api:channel:find:one')) {
+      if (this.$hasScope('channel:find:one')) {
         this.$refs.channel.onItem(id);
       }
     },
 
     onItemDel(id) {
-      if (this.$hasScope('api:channel:remove:one')) {
+      if (this.$hasScope('channel:remove:one')) {
         this.$refs.delete.onConfirm(id, 'channel');
       }
     },

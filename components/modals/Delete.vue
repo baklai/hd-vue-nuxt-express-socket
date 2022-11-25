@@ -24,7 +24,7 @@ export default {
     return {
       snackbar: false,
       IDItem: null,
-      api: null
+      event: null
     };
   },
 
@@ -35,14 +35,14 @@ export default {
   },
 
   methods: {
-    onConfirm(id, api) {
-      this.api = api;
+    onConfirm(id, event) {
+      this.event = event;
       this.IDItem = id;
       this.snackbar = true;
     },
 
     async mOk() {
-      await this.$store.dispatch(`api/${this.api}/removeOne`, this.IDItem);
+      await this.$store.dispatch(`api/${this.event}/removeOne`, this.IDItem);
       this.snackbar = false;
       this.$emit('closeEvent');
       this.$toast.success(this.$t('Record is removed'));
@@ -50,7 +50,7 @@ export default {
 
     mCancel() {
       this.IDItem = null;
-      this.api = null;
+      this.event = null;
     }
   }
 };

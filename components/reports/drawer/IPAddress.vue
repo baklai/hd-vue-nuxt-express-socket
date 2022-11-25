@@ -1,11 +1,7 @@
 <template>
   <v-navigation-drawer app right clipped permanent width="400" v-model="drawer" v-if="report">
-    <ModalsDelete ref="delete" @closeEvent="close" v-if="$hasScope('api:ipaddress:remove:one')" />
-    <ModalsIPAddress
-      ref="ipaddress"
-      @closeEvent="close"
-      v-if="$hasScope('api:ipaddress:find:one')"
-    />
+    <ModalsDelete ref="delete" @closeEvent="close" v-if="$hasScope('ipaddress:remove:one')" />
+    <ModalsIPAddress ref="ipaddress" @closeEvent="close" v-if="$hasScope('ipaddress:find:one')" />
     <template v-slot:prepend>
       <v-card tile flat>
         <v-list-item two-line>
@@ -26,10 +22,7 @@
             </template>
             <v-list flat dense subheader>
               <HostDefActions :host="report.ipaddress" />
-              <v-list-item
-                @click="onItemMod(report.id)"
-                v-if="$hasScope('api:ipaddress:update:one')"
-              >
+              <v-list-item @click="onItemMod(report.id)" v-if="$hasScope('ipaddress:update:one')">
                 <v-list-item-icon class="mr-1">
                   <v-icon small> mdi-note-edit-outline </v-icon>
                 </v-list-item-icon>
@@ -37,10 +30,7 @@
                   {{ $t('Edit record') }}
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item
-                v-if="$hasScope('api:ipaddress:remove:one')"
-                @click="onItemDel(report.id)"
-              >
+              <v-list-item v-if="$hasScope('ipaddress:remove:one')" @click="onItemDel(report.id)">
                 <v-list-item-icon class="mr-1">
                   <v-icon small> mdi-trash-can-outline </v-icon>
                 </v-list-item-icon>
@@ -155,7 +145,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="$hasScope('app:ipaddress:client:internet')">
+    <v-row v-if="$hasScope('ipaddress:client:internet')">
       <v-col cols="12" v-if="report.internet">
         <v-card flat class="mx-auto">
           <v-card-title> {{ $t('Internet') }} </v-card-title>
@@ -183,7 +173,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="$hasScope('app:ipaddress:client:email')">
+    <v-row v-if="$hasScope('ipaddress:client:email')">
       <v-col cols="12" v-if="report.email">
         <v-card flat class="mx-auto" v-if="report.email.length > 0">
           <v-card-title> {{ $t('E-mail') }} </v-card-title>
@@ -259,13 +249,13 @@ export default {
     },
 
     onItemMod(id) {
-      if (this.$hasScope('api:ipaddress:update:one')) {
+      if (this.$hasScope('ipaddress:update:one')) {
         this.$refs.ipaddress.onItem(id);
       }
     },
 
     onItemDel(id) {
-      if (this.$hasScope('api:ipaddress:remove:one')) {
+      if (this.$hasScope('ipaddress:remove:one')) {
         this.$refs.delete.onConfirm(id, 'ipaddress');
       }
     }

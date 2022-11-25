@@ -3,7 +3,7 @@
     <v-app>
       <AppDrawer />
       <AppNavBar />
-      <v-main :style="$hasScope('app:selected-html') ? '' : disabledSelectedFromHTML">
+      <v-main :style="$hasScope('selected-html') ? '' : disabledSelectedFromHTML">
         <nuxt v-if="!$store.state.isMaintenance" />
         <AppMaintenance v-else />
       </v-main>

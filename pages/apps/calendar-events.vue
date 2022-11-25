@@ -1,7 +1,7 @@
 <template>
   <v-container full-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('api:event:remove:one')" />
-    <ModalsEvent ref="event" @closeEvent="getItems" v-if="$hasScope('api:event:find:one')" />
+    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('event:remove:one')" />
+    <ModalsEvent ref="event" @closeEvent="getItems" v-if="$hasScope('event:find:one')" />
 
     <v-card :height="windowSize.y - 64 - 64 - 64">
       <v-toolbar flat>
@@ -26,7 +26,7 @@
           </template>
           <span> {{ $t('Clear filters') }} </span>
         </v-tooltip>
-        <v-tooltip bottom v-if="$hasScope('api:event:create:one')">
+        <v-tooltip bottom v-if="$hasScope('event:create:one')">
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-on="on" v-bind="attrs" @click="onItem(null)" class="mx-2">
               <v-icon> mdi-plus-circle-outline </v-icon>
@@ -105,7 +105,7 @@
                     {{ $t('Open url') }}
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item v-if="$hasScope('api:event:create:one')" @click="onItem(null)">
+                <v-list-item v-if="$hasScope('event:create:one')" @click="onItem(null)">
                   <v-list-item-icon class="mr-1">
                     <v-icon small> mdi-plus-circle-outline </v-icon>
                   </v-list-item-icon>
@@ -113,10 +113,7 @@
                     {{ $t('Create record') }}
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item
-                  v-if="$hasScope('api:event:update:one')"
-                  @click="onItem(selectedEvent.id)"
-                >
+                <v-list-item v-if="$hasScope('event:update:one')" @click="onItem(selectedEvent.id)">
                   <v-list-item-icon class="mr-1">
                     <v-icon small> mdi-note-edit-outline </v-icon>
                   </v-list-item-icon>
@@ -126,7 +123,7 @@
                 </v-list-item>
                 <v-list-item
                   @click="onDelete(selectedEvent.id)"
-                  v-if="$hasScope('api:event:remove:one')"
+                  v-if="$hasScope('event:remove:one')"
                 >
                   <v-list-item-icon class="mr-1">
                     <v-icon small> mdi-trash-can-outline </v-icon>
@@ -336,14 +333,14 @@ export default {
     },
 
     onItem(id) {
-      if (this.$hasScope('api:event:find:one')) {
+      if (this.$hasScope('event:find:one')) {
         this.selectedOpen = false;
         this.$refs.event.onItem(id);
       }
     },
 
     onDelete(id) {
-      if (this.$hasScope('api:event:remove:one')) {
+      if (this.$hasScope('event:remove:one')) {
         this.selectedOpen = false;
         this.$refs.delete.onConfirm(id, 'event');
       }
