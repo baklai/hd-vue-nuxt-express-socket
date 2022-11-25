@@ -74,10 +74,6 @@ export default ({ app, store, redirect }, inject) => {
 
   const socket = createClientSocket(app, store);
 
-  const hasScope = (scope) => {
-    return true; // store.state.auth.hasScope(scope) || store.state.auth?.user?.isAdmin;
-  };
-
   const helpdesk = {
     user: null,
     token: null,
@@ -88,7 +84,9 @@ export default ({ app, store, redirect }, inject) => {
 
     scopes: [...scopes, ...store.getters.scopes],
 
-    hasScope,
+    hasScope(scope) {
+      return this.user.scope.includes(scope);
+    },
 
     get loggedIn() {
       return this.user !== null;
