@@ -135,13 +135,6 @@
                     </v-app-bar>
                   </template>
 
-                  <template v-slot:[`item.data-table-select`]="{ isSelected, select }">
-                    <v-simple-checkbox
-                      :value="isSelected"
-                      @input="select($event)"
-                    ></v-simple-checkbox>
-                  </template>
-
                   <template v-slot:[`item.scope`]="{ item }">
                     <v-chip label small>
                       {{ item.scope }}
@@ -249,7 +242,7 @@ export default {
           this.user.login = login;
           this.user.isActive = isActive;
           this.user.isAdmin = isAdmin;
-          this.user.scope = scope;
+          this.user.scope = this.$helpdesk.scopes.filter((item) => scope.includes(item.scope));
         }
         this.dialog = true;
       } catch (err) {
@@ -264,11 +257,15 @@ export default {
           if (this.IDItem) {
             await this.$store.dispatch('api/user/updateOne', {
               id: this.IDItem,
-              ...this.user
+              ...this.user,
+              scope: this.user.scope.map((item) => item.scope)
             });
             this.$toast.success(this.$t('Record is updated'));
           } else {
-            await this.$store.dispatch('api/user/createOne', this.user);
+            await this.$store.dispatch('api/user/createOne', {
+              ...this.user,
+              scope: this.user.scope.map((item) => item.scope)
+            });
             this.$toast.success(this.$t('Record is created'));
           }
           this.onClose();
@@ -290,12 +287,3 @@ export default {
   }
 };
 </script>
-
-<style>
-*::before {
-  background: none !important;
-}
-*::after {
-  background: none !important;
-}
-</style>

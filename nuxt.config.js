@@ -217,6 +217,7 @@ export default {
   watch: ['~/api/**/*.js'],
 
   build: {
-    publicPath: 'cdn/'
+    publicPath: 'cdn/',
+    transpile: ['vuetify', 'vuetify/lib']
   }
 };
