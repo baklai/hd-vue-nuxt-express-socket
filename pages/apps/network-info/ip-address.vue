@@ -452,6 +452,7 @@ export default {
     apptitle: 'Network IP Address',
     appsubtitle: 'Network IP Address of the technical support department'
   },
+
   async asyncData({ store }) {
     const [units, locations, positions, companies, branches, enterprises, departments] =
       await Promise.all([
@@ -473,6 +474,7 @@ export default {
       departments
     };
   },
+
   data() {
     return {
       windowSize: { x: 0, y: 0 },

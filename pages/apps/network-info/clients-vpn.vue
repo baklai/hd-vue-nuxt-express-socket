@@ -348,6 +348,7 @@ export default {
       units
     };
   },
+
   data() {
     return {
       windowSize: { x: 0, y: 0 },

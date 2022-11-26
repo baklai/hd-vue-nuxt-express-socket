@@ -9,7 +9,9 @@ export default {
     apptitle: 'Helpdesk administration panel',
     appsubtitle: 'Helpdesk of the technical support department'
   },
+
   middleware: ['is-admin'],
+
   layout: 'apps'
 };
 </script>

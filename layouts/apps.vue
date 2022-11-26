@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  middleware: ['auth'],
+  middleware: ['is-auth'],
 
   head() {
     return {

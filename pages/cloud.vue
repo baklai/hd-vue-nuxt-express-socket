@@ -101,6 +101,7 @@ export default {
     apptitle: 'HD File Hosting',
     appsubtitle: 'File hosting of the technical support department'
   },
+
   layout({ $helpdesk }) {
     return $helpdesk.loggedIn ? 'apps' : 'default';
   },

@@ -85,7 +85,7 @@ export default {
     appsubtitle: 'Blog of the technical support department'
   },
 
-  middleware: ['auth'],
+  middleware: ['is-scope'],
 
   layout: 'apps',
 

@@ -9,7 +9,9 @@ export default {
     apptitle: 'Helpdesk applications',
     appsubtitle: 'Helpdesk of the technical support department'
   },
-  middleware: ['auth', 'is-scope'],
+
+  middleware: ['is-auth', 'is-scope'],
+
   layout: 'apps'
 };
 </script>

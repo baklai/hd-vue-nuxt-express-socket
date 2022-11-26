@@ -2,11 +2,6 @@ $data-table-border-radius: 0px;
 
 $input-font-size: 14px;
 
-// Disabled ripple animation
-$ripple-animation-transition-in: none;
-$ripple-animation-transition-out: none;
-$ripple-animation-visible-opacity: none;
-
 $material-light: (
   cards: var(--v-themecolor-base),
   app-bar: var(--v-themecolor-base),
