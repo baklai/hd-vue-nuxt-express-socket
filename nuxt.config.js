@@ -26,7 +26,7 @@ export default {
 
   publicRuntimeConfig: {
     fileHosting:
-      dirtree('./static/docs', {
+      dirtree(path.join(__dirname, 'static', 'docs'), {
         extensions: /\.(md|pdf|png|txt|xls|doc|docx|zip|rar|cab|exe|msi)$/,
         attributes: ['size', 'type', 'extension', 'atime', 'mtime', 'ctime', 'birthtime'],
         normalizePath: true
