@@ -1,15 +1,13 @@
 <template>
-  <client-only>
-    <v-app>
-      <AppDrawer />
-      <AppNavBar />
-      <v-main :style="$hasScope('selected-html') ? '' : disabledSelectedFromHTML">
-        <nuxt v-if="!$store.state.isMaintenance" />
-        <AppMaintenance v-else />
-      </v-main>
-      <AppScrollTop />
-    </v-app>
-  </client-only>
+  <v-app>
+    <AppDrawer />
+    <AppNavBar />
+    <v-main :style="$hasScope('selected-html') ? '' : disabledSelectedFromHTML">
+      <nuxt v-if="!$store.state.isMaintenance" />
+      <AppMaintenance v-else />
+    </v-main>
+    <AppScrollTop />
+  </v-app>
 </template>
 
 <script>

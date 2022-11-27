@@ -110,7 +110,8 @@ export default {
   },
 
   content: {
-    apiPrefix: 'content'
+    apiPrefix: 'content',
+    useCache: false
   },
 
   i18n: {

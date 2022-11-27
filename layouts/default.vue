@@ -1,17 +1,15 @@
 <template>
-  <client-only>
-    <v-app>
-      <AppDrawerMini />
-      <v-app-bar app flat color="transparent" class="px-4">
-        <v-spacer />
-        <AppMainMenuBtn />
-      </v-app-bar>
-      <v-main :style="disabledSelectedFromHTML">
-        <nuxt />
-      </v-main>
-      <AppScrollTop />
-    </v-app>
-  </client-only>
+  <v-app>
+    <AppDrawerMini />
+    <v-app-bar app flat color="transparent" class="px-4">
+      <v-spacer />
+      <AppMainMenuBtn />
+    </v-app-bar>
+    <v-main :style="disabledSelectedFromHTML">
+      <nuxt />
+    </v-main>
+    <AppScrollTop />
+  </v-app>
 </template>
 
 <script>
