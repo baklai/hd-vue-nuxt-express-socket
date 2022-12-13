@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  middleware: ['is-auth'],
+  // middleware: ['is-auth'],
 
   head() {
     return {

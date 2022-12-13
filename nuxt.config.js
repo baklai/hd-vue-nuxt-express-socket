@@ -1,7 +1,6 @@
 import dirtree from 'directory-tree';
 import dotenv from 'dotenv';
 import path from 'path';
-import fs from 'fs';
 
 import { config } from './package.json';
 
@@ -15,6 +14,12 @@ dotenv.config({
 export default {
   telemetry: false,
   ssr: false,
+
+  target: 'static',
+
+  // generate: {
+  //   dir: 'client'
+  // },
 
   cli: {
     badgeMessages: [
@@ -31,18 +36,6 @@ export default {
         attributes: ['size', 'type', 'extension', 'atime', 'mtime', 'ctime', 'birthtime'],
         normalizePath: true
       }) || null
-  },
-
-  server: {
-    port: process.env.NODE_ENV === 'production' ? 443 : 3000,
-    host: process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost',
-    https:
-      process.env.NODE_ENV === 'production'
-        ? {
-            key: fs.readFileSync(path.resolve(__dirname, 'certs', 'server.key')),
-            cert: fs.readFileSync(path.resolve(__dirname, 'certs', 'server.crt'))
-          }
-        : false
   },
 
   router: {
@@ -90,14 +83,7 @@ export default {
 
   buildModules: ['@nuxtjs/vuetify'],
 
-  modules: [
-    '~/modules/socket',
-    'nuxt-route-meta',
-    'nuxt-socket-io',
-    '@nuxt/content',
-    '@nuxtjs/i18n',
-    '@nuxtjs/toast'
-  ],
+  modules: ['nuxt-route-meta', 'nuxt-socket-io', '@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/toast'],
 
   io: {
     warnings: false,
@@ -109,10 +95,10 @@ export default {
     ]
   },
 
-  content: {
-    apiPrefix: 'content',
-    useCache: false
-  },
+  // content: {
+  //   apiPrefix: 'content',
+  //   useCache: false
+  // },
 
   i18n: {
     lazy: true,
@@ -214,8 +200,6 @@ export default {
       }
     }
   },
-
-  watch: ['~/api/**/*.js'],
 
   build: {
     publicPath: 'cdn/',
