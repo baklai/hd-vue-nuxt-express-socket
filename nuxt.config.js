@@ -2,7 +2,7 @@ import dirtree from 'directory-tree';
 import dotenv from 'dotenv';
 import path from 'path';
 
-import { config } from './package.json';
+import { name, version, config } from './package.json';
 
 dotenv.config({
   path:
@@ -17,15 +17,12 @@ export default {
 
   target: 'static',
 
-  // generate: {
-  //   dir: 'client'
-  // },
+  generate: {
+    dir: 'client'
+  },
 
   cli: {
-    badgeMessages: [
-      `Application: ${process.env.npm_package_name.toUpperCase()}`,
-      `Version:     ${process.env.npm_package_version}`
-    ],
+    badgeMessages: [`Application: ${name.toUpperCase()}`, `Version:     ${version}`],
     bannerColor: 'blue'
   },
 
@@ -90,15 +87,16 @@ export default {
     sockets: [
       {
         name: 'api',
-        default: true
+        default: true,
+        url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
       }
     ]
   },
 
-  // content: {
-  //   apiPrefix: 'content',
-  //   useCache: false
-  // },
+  content: {
+    apiPrefix: 'content',
+    useCache: false
+  },
 
   i18n: {
     lazy: true,

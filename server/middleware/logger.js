@@ -24,7 +24,7 @@ module.exports = (socket, unless) => {
         : 'anonymous'
     });
     console.log(
-      `${log.address} / ${log.user} - ${eventStr(log.event)} [${log.datetime}] "${log.agent}"`
+      `${log.address} [${log.user}] - ${eventStr(log.event)} [${log.datetime}] "${log.agent}"`
     );
     return next();
   };

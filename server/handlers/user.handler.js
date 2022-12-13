@@ -4,7 +4,7 @@ const User = require('../models/user.model');
 
 const { toResponse } = require('../models/user.model');
 
-const { BCRYPT_SALT } = require('../config/api.config');
+const { BCRYPT_SALT } = require('../config');
 
 module.exports = (io, socket) => {
   const findAll = async (payload, callback) => {

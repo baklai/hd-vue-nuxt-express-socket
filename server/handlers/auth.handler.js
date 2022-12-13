@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const { toResponse, toToken } = require('../models/user.model');
 
-const { JWT_SECRET_KEY, TOKEN_EXPIRES_IN } = require('../config/api.config');
+const { JWT_SECRET_KEY, TOKEN_EXPIRES_IN } = require('../config');
 
 module.exports = (io, socket) => {
   const signin = async (payload, callback) => {

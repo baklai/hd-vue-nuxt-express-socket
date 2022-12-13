@@ -44,10 +44,10 @@
     "npm": ">=8.5.5"
   },
   "scripts": {
-    "dev:client": "nuxt",
     "dev:server": "nodemon server",
+    "dev:client": "nuxt --port 8080",
     "build": "nuxt generate",
-    "start": "nuxt start"
+    "start": "node server"
   },
   "dependencies": {
     "@nuxt/content": "^1.15.1",

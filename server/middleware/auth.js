@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user.model');
 
-const { JWT_SECRET_KEY } = require('../config/api.config');
+const { JWT_SECRET_KEY } = require('../config');
 
 module.exports = (socket, unless) => {
   return async ([event, ...args], next) => {

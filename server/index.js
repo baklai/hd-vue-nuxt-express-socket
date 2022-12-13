@@ -1,6 +1,7 @@
+const http = require('http');
 const path = require('path');
 const dotenv = require('dotenv');
-const { createServer } = require('http');
+const express = require('express');
 const { Server } = require('socket.io');
 
 dotenv.config({
@@ -10,15 +11,17 @@ dotenv.config({
       : path.join(__dirname, '..', '.env.dev')
 });
 
-const { PORT, HOST, MONGO_URI, BCRYPT_SALT } = require('./config/api.config');
+const { PORT, HOST, MONGO_URI, BCRYPT_SALT } = require('./config');
 
 const connectToMongo = require('./utils/database');
 
 connectToMongo(MONGO_URI, BCRYPT_SALT);
 
-const httpServer = createServer();
+const app = express();
 
-const io = new Server(httpServer, {
+const server = http.createServer(app);
+
+const io = new Server(server, {
   maxHttpBufferSize: 1e8,
   pingTimeout: 60000,
   allowEIO3: true,
@@ -28,6 +31,11 @@ const io = new Server(httpServer, {
   },
   path: '/api'
 });
+
+const authMiddleware = require('./middleware/auth');
+const scopeMiddleware = require('./middleware/scope');
+const loggerMiddleware = require('./middleware/logger');
+const errorMiddleware = require('./middleware/error');
 
 const authHandler = require('./handlers/auth.handler');
 const userHandler = require('./handlers/user.handler');
@@ -49,10 +57,11 @@ const eventHandler = require('./handlers/event.handler');
 const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
 
-const authMiddleware = require('./middleware/auth');
-const scopeMiddleware = require('./middleware/scope');
-const loggerMiddleware = require('./middleware/logger');
-const errorMiddleware = require('./middleware/error');
+app.use(express.static(path.join(__dirname, '..', 'client')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', '200.html'));
+});
 
 io.on('connection', (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
@@ -139,6 +148,6 @@ io.on('connection', (socket) => {
   // });
 });
 
-httpServer.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server listening on http://${HOST}:${PORT}`);
 });
