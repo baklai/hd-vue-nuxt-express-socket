@@ -20,7 +20,7 @@
         showFirstLastPage: true,
         showCurrentPage: true
       }"
-      :height="windowSize.y - 64 - 64 - 59 - 4"
+      :height="windowSize.y - 64 - 64 - 59"
       :loading-text="$t('Loading please wait')"
       :no-data-text="$t('No matching records found')"
       class="table-fixed-col"

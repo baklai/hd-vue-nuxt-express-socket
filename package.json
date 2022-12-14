@@ -44,8 +44,8 @@
     "npm": ">=8.5.5"
   },
   "scripts": {
-    "dev:server": "nodemon server",
-    "dev:client": "nuxt --port 8080",
+    "dev:server": "set NODE_ENV=development&& nodemon server",
+    "dev:client": "set NODE_ENV=development&& nuxt --port 8080",
     "build": "nuxt generate",
     "start": "node server"
   },

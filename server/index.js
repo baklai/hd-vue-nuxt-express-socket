@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const express = require('express');
 const { Server } = require('socket.io');
 
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
+
 dotenv.config({
   path:
     process.env.NODE_ENV === 'production'
