@@ -35,6 +35,14 @@ export default {
       }) || null
   },
 
+  loading: false,
+
+  loadingIndicator: {
+    name: 'cube-grid',
+    color: '#F5F5F5',
+    background: '#FFFFFF'
+  },
+
   router: {
     prefetchLinks: false
   },
@@ -55,15 +63,13 @@ export default {
       },
       { name: 'google', content: 'notranslate' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'stylesheet', href: '/css/loading.css' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
 
   components: true,
-
-  loading: {
-    color: '#2196F3',
-    height: '2px'
-  },
 
   css: [
     '@mdi/font/css/materialdesignicons.min.css',
