@@ -1,7 +1,10 @@
+const cors = require('cors');
 const http = require('http');
 const path = require('path');
 const dotenv = require('dotenv');
+const compression = require('compression');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const { Server } = require('socket.io');
 
 process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
@@ -19,7 +22,36 @@ const connectToMongo = require('./utils/database');
 
 connectToMongo(MONGO_URI, BCRYPT_SALT);
 
+const expressError = require('./middleware/error-express');
+
 const app = express();
+
+app.use(
+  cors({
+    origin: '*',
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
+  })
+);
+
+app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, '..', 'client')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', '200.html'));
+});
+
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Oops! Error 404 has occurred' });
+});
+
+app.use((err, req, res, next) => {
+  expressError(err, res);
+});
 
 const server = http.createServer(app);
 
@@ -37,7 +69,7 @@ const io = new Server(server, {
 const authMiddleware = require('./middleware/auth');
 const scopeMiddleware = require('./middleware/scope');
 const loggerMiddleware = require('./middleware/logger');
-const errorMiddleware = require('./middleware/error');
+const errorMiddleware = require('./middleware/error-socket');
 
 const authHandler = require('./handlers/auth.handler');
 const userHandler = require('./handlers/user.handler');
@@ -59,13 +91,7 @@ const eventHandler = require('./handlers/event.handler');
 const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
 
-app.use(express.static(path.join(__dirname, '..', 'client')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', '200.html'));
-});
-
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
   socket.use(
     scopeMiddleware(socket, [
@@ -79,7 +105,7 @@ io.on('connection', (socket) => {
 
   authHandler(io, socket);
   userHandler(io, socket);
-  //  toolHandler(io, socket);
+  toolHandler(io, socket);
   locationHandler(io, socket);
   positionHandler(io, socket);
   unitHandler(io, socket);
@@ -96,6 +122,11 @@ io.on('connection', (socket) => {
   eventHandler(io, socket);
   statisticHandler(io, socket);
   loggerHandler(io, socket);
+
+  // io.sockets.sockets.forEach(function (data, counter) {
+  //   console.log('counter', counter);
+  //   console.log('data', data);
+  // });
 
   socket.on('error', errorMiddleware(socket, 'api:error'));
 

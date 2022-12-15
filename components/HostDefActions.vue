@@ -43,27 +43,27 @@ export default {
   },
 
   methods: {
-    copyIPtoClipboard(ip) {
-      this.$clipboard(ip);
+    copyIPtoClipboard(host) {
+      this.$clipboard(host);
       this.$toast.success(this.$t('IP Copied to clipboard'));
     },
 
-    async getRDPClient(ip) {
-      const file = await this.$store.dispatch('api/tool/getRDP', ip);
+    async getRDPClient(host) {
+      const file = await this.$store.dispatch('api/tool/getRDP', host);
       const url = window.URL.createObjectURL(new Blob([file]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `RDP_${ip}.rdp`);
+      link.setAttribute('download', `RDP_${host}.rdp`);
       this.$toast.success(this.$t('RDP File created'));
       link.click();
     },
 
-    async getVNCClient(ip) {
-      const file = await this.$store.dispatch('api/tool/getVNC', ip);
+    async getVNCClient(host) {
+      const file = await this.$store.dispatch('api/tool/getVNC', host);
       const url = window.URL.createObjectURL(new Blob([file]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `VNC_${ip}.vnc`);
+      link.setAttribute('download', `VNC_${host}.vnc`);
       this.$toast.success(this.$t('VNC File created'));
       link.click();
     },

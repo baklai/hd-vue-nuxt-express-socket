@@ -19,6 +19,10 @@ module.exports = (io, socket) => {
         expiresIn: TOKEN_EXPIRES_IN
       });
       socket.handshake.auth.token = token;
+
+      socket.broadcast.emit('api:message', `${user.name} зашел в систему.`);
+      socket.emit('api:message', `${user.name} добро пожаловать.`);
+
       callback(toResponse(user));
     } catch (err) {
       callback({ error: err.message });
