@@ -45,7 +45,7 @@
   },
   "scripts": {
     "dev:server": "set NODE_ENV=development&& nodemon server",
-    "dev:client": "set NODE_ENV=development&& nuxt --port 8080",
+    "dev:client": "set NODE_ENV=development&& nuxt --port 3000",
     "build": "nuxt generate",
     "start": "node server"
   },

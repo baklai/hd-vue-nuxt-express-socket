@@ -88,7 +88,7 @@ export default {
       {
         name: 'api',
         default: true,
-        url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000'
+        url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001'
       }
     ]
   },
