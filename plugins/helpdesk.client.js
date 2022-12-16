@@ -25,51 +25,26 @@ const createScopeList = (router) => {
   }));
 };
 
-const createClientSocket = (app, store) => {
-  const socket = app.$nuxtSocket({
-    name: 'helpdesk',
-    path: '/helpdesk',
-    transports: ['websocket'],
-    reconnection: false
-  });
+// const createClientSocket = (app, store) => {
 
-  socket.on('disconnect', () => {
-    store.commit('isMaintenance', true);
-  });
-
-  socket.on('helpdesk:user:signin', (payload) => {
-    store.commit('updateUsers', payload);
-  });
-
-  socket.on('helpdesk:user:signout', (payload) => {
-    store.commit('updateUsers', payload);
-  });
-
-  socket.on('helpdesk:message', (payload) => {
-    if (typeof payload === 'string') app.$toast.success(payload);
-  });
-
-  socket.on('helpdesk:error', (payload) => {
-    if (typeof payload === 'string') app.$toast.error(payload);
-  });
-
-  return socket;
-};
+//   return socket;
+// };
 
 export default ({ app, store, redirect }, inject) => {
   const scopes = createScopeList(app.router);
 
   const navigation = createNavigationTree(app.router.options.routes);
 
-  const socket = createClientSocket(app, store);
+  // const socket = null; // = createClientSocket(app, store);
 
   const helpdesk = {
     user: null,
     token: null,
+    socket: null,
 
     ...navigation,
 
-    socket,
+    // socket,
 
     scopes: [...scopes, ...store.getters.scopes],
 
@@ -106,8 +81,39 @@ export default ({ app, store, redirect }, inject) => {
     },
 
     async login(payload) {
-      this.user = await this.emit('auth:signin', { ...payload });
-      return redirect('/#welcome-to-helpdesk');
+      this.socket = app.$nuxtSocket({
+        name: 'helpdesk',
+        path: '/helpdesk',
+        transports: ['websocket'],
+        reconnection: false
+      });
+
+      this.socket.on('connect', async () => {
+        this.user = await this.emit('auth:signin', { ...payload });
+        redirect('/#welcome-to-helpdesk');
+      });
+
+      this.socket.on('disconnect', () => {
+        this.user = null;
+        this.token = null;
+        redirect('/#see-you-helpdesk');
+      });
+
+      this.socket.on('helpdesk:user:signin', (payload) => {
+        store.commit('updateUsers', payload);
+      });
+
+      this.socket.on('helpdesk:user:signout', (payload) => {
+        store.commit('updateUsers', payload);
+      });
+
+      this.socket.on('helpdesk:message', (payload) => {
+        if (typeof payload === 'string') app.$toast.success(payload);
+      });
+
+      this.socket.on('helpdesk:error', (payload) => {
+        if (typeof payload === 'string') app.$toast.error(payload);
+      });
     },
 
     async logout() {

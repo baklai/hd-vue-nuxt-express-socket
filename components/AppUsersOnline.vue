@@ -1,8 +1,7 @@
 <template>
   <v-menu
-    bottom
     left
-    offset-x
+    bottom
     offset-y
     open-on-hover
     max-width="400"
@@ -22,21 +21,21 @@
         <span> {{ $t('Online users') }} </span>
       </v-tooltip>
     </template>
-    <v-card>
-      <v-list flat dense subheader max-height="600">
-        <!-- <v-subheader class="text-uppercase">
-          {{ $t('Online users') }}
-        </v-subheader> -->
-        <v-list-item dense v-for="(item, index) in users" :key="index" class="pl-2 pr-6">
-          <v-list-item-icon class="mx-2">
-            <v-icon> mdi-account-circle-outline </v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> {{ item }} </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-card>
+    <v-system-bar color="green">
+      <v-spacer />
+      <strong class="text-uppercase"> {{ $t('Online users') }} </strong>
+      <v-spacer />
+    </v-system-bar>
+    <v-list flat dense max-height="600" class="py-2">
+      <v-list-item dense v-for="(item, index) in users" :key="index">
+        <v-list-item-icon class="mr-1">
+          <v-icon small left> mdi-account-circle-outline </v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title> {{ item }} </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </v-menu>
 </template>
 
