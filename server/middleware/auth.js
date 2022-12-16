@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user.model');
+const { toResponse } = require('../models/user.model');
 
 const { JWT_SECRET_KEY } = require('../config');
 
@@ -22,7 +23,7 @@ module.exports = (socket, unless) => {
             new Error('Invalid login or password, kindly contact the admin if this is an anomaly')
           );
         if (!user.isActive) return next(new Error('Authentication error, account is inactive'));
-        socket.user = user;
+        socket.user = toResponse(user);
 
         return next();
       });

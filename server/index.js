@@ -130,7 +130,7 @@ io.on('connection', async (socket) => {
   socket.on('error', errorMiddleware(socket, 'helpdesk:error'));
 
   socket.on('disconnect', () => {
-    console.log(socket);
+    if (socket.user) io.emit('helpdesk:user:signout', socket.user.name);
   });
 
   // socket.on('disconnect', () => {
