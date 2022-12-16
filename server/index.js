@@ -22,8 +22,6 @@ const connectToMongo = require('./utils/database');
 
 connectToMongo(MONGO_URI, BCRYPT_SALT);
 
-const expressError = require('./middleware/error-express');
-
 const app = express();
 
 app.use(
@@ -49,8 +47,8 @@ app.use((req, res, next) => {
   res.status(404).json({ message: 'Oops! Error 404 has occurred' });
 });
 
-app.use((err, req, res, next) => {
-  expressError(err, res);
+app.use((err, req, res) => {
+  res.status(500).json({ message: 'Oops! Internal server error' });
 });
 
 const server = http.createServer(app);
@@ -63,13 +61,13 @@ const io = new Server(server, {
     origin: '*',
     credentials: true
   },
-  path: '/api'
+  path: '/helpdesk'
 });
 
 const authMiddleware = require('./middleware/auth');
 const scopeMiddleware = require('./middleware/scope');
 const loggerMiddleware = require('./middleware/logger');
-const errorMiddleware = require('./middleware/error-socket');
+const errorMiddleware = require('./middleware/error');
 
 const authHandler = require('./handlers/auth.handler');
 const userHandler = require('./handlers/user.handler');
@@ -93,6 +91,7 @@ const loggerHandler = require('./handlers/logger.handler');
 
 io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
+
   socket.use(
     scopeMiddleware(socket, [
       'auth:signin',
@@ -101,6 +100,7 @@ io.on('connection', async (socket) => {
       'notification:remove:one'
     ])
   );
+
   socket.use(loggerMiddleware(socket, ['logger:find:all', 'logger:remove:all']));
 
   authHandler(io, socket);
@@ -123,12 +123,15 @@ io.on('connection', async (socket) => {
   statisticHandler(io, socket);
   loggerHandler(io, socket);
 
-  // io.sockets.sockets.forEach(function (data, counter) {
-  //   console.log('counter', counter);
-  //   console.log('data', data);
-  // });
+  socket.on('helpdesk:message', (payload, callback) => {
+    if (typeof payload === 'string') socket.broadcast.emit('helpdesk:message', payload);
+  });
 
-  socket.on('error', errorMiddleware(socket, 'api:error'));
+  socket.on('error', errorMiddleware(socket, 'helpdesk:error'));
+
+  socket.on('disconnect', () => {
+    console.log(socket);
+  });
 
   // socket.on('disconnect', () => {
   //   const user = users.remove(socket.id);

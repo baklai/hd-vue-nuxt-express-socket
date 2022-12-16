@@ -92,7 +92,7 @@ export default {
     warnings: false,
     sockets: [
       {
-        name: 'api',
+        name: 'helpdesk',
         default: true,
         url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001'
       }

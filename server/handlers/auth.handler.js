@@ -19,10 +19,9 @@ module.exports = (io, socket) => {
         expiresIn: TOKEN_EXPIRES_IN
       });
       socket.handshake.auth.token = token;
-
-      socket.broadcast.emit('api:message', `${user.name} зашел в систему.`);
-      socket.emit('api:message', `${user.name} добро пожаловать.`);
-
+      socket.broadcast.emit('helpdesk:message', `${user.name} зашел в систему.`);
+      socket.emit('helpdesk:message', `${user.name} добро пожаловать.`);
+      io.emit('helpdesk:user:signin', user.name);
       callback(toResponse(user));
     } catch (err) {
       callback({ error: err.message });
@@ -31,7 +30,9 @@ module.exports = (io, socket) => {
 
   const signout = async (payload, callback) => {
     try {
+      console.log(socket);
       socket.handshake.auth.token = null;
+      io.emit('helpdesk:user:signout', payload);
       callback('Ok');
     } catch (err) {
       callback({ error: err.message });

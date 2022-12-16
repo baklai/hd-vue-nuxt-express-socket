@@ -7,6 +7,8 @@ export const state = () => ({
 
   sidebar: null,
 
+  users: [],
+
   author: {
     name: config.author.name,
     email: config.author.email,
@@ -140,6 +142,10 @@ export const state = () => ({
 });
 
 export const getters = {
+  users: (state) => {
+    return state.users;
+  },
+
   copyright: (state) => {
     return `Copyright © ${new Date().getFullYear()} ${state.author.name}. All rights reserved.`;
   },
@@ -172,6 +178,10 @@ export const mutations = {
     $nuxt.$root.$vuetify.theme.dark = !$nuxt.$root.$vuetify.theme.dark;
     if ($nuxt.$root.$vuetify.theme.dark) localStorage.setItem('app.theme', 'dark');
     else localStorage.setItem('app.theme', 'light');
+  },
+
+  updateUsers(state, val) {
+    state.users.push(val);
   },
 
   setError(state, error) {

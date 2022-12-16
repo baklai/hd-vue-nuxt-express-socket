@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     users() {
-      return this.$store.state.helper.users;
+      return this.$store.state.users;
     }
   }
 };

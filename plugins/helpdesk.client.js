@@ -27,11 +27,8 @@ const createScopeList = (router) => {
 
 const createClientSocket = (app, store) => {
   const socket = app.$nuxtSocket({
-    name: 'api',
-    path: '/api',
-    // auth: {
-    //   token: null
-    // },
+    name: 'helpdesk',
+    path: '/helpdesk',
     transports: ['websocket'],
     reconnection: false
   });
@@ -40,27 +37,19 @@ const createClientSocket = (app, store) => {
     store.commit('isMaintenance', true);
   });
 
-  socket.on('updateUsers', (data) => {
-    if (typeof data === 'string') {
-      console.error(data);
-    } else {
-      store.commit('helper/updateUsers', data);
-    }
+  socket.on('helpdesk:user:signin', (payload) => {
+    store.commit('updateUsers', payload);
   });
 
-  // socket.on('newMessage', (data) => {
-  //   if (typeof data === 'string') {
-  //     console.error(data);
-  //   } else {
-  //     app.$toast.success(data.text);
-  //   }
-  // });
-
-  socket.on('api:message', (payload) => {
-    if (typeof payload === 'string') app.$toast.info(payload);
+  socket.on('helpdesk:user:signout', (payload) => {
+    store.commit('updateUsers', payload);
   });
 
-  socket.on('api:error', (payload) => {
+  socket.on('helpdesk:message', (payload) => {
+    if (typeof payload === 'string') app.$toast.success(payload);
+  });
+
+  socket.on('helpdesk:error', (payload) => {
     if (typeof payload === 'string') app.$toast.error(payload);
   });
 

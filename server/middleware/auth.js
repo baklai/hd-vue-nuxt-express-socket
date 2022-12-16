@@ -23,6 +23,7 @@ module.exports = (socket, unless) => {
           );
         if (!user.isActive) return next(new Error('Authentication error, account is inactive'));
         socket.user = user;
+
         return next();
       });
     } else {
