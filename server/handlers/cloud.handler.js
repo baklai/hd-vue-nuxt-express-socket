@@ -7,7 +7,7 @@ module.exports = (io, socket) => {
       const items = dirtree(
         path.join(__dirname, '../..', 'public'),
         {
-          extensions: /\.(md|pdf|png|txt|xls|doc|docx|zip|rar|cab|exe|msi)$/,
+          extensions: /\.(md|pdf|png|txt|xls|doc|docx|zip|rar|cab|exe|msi|msu)$/,
           attributes: ['size', 'type', 'extension', 'atime', 'mtime', 'ctime', 'birthtime'],
           normalizePath: true
         },
