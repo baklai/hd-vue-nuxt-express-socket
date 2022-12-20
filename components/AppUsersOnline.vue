@@ -4,7 +4,7 @@
     bottom
     offset-y
     open-on-hover
-    max-width="400"
+    min-width="250"
     v-model="menu"
     v-if="$helpdesk.loggedIn"
   >
@@ -21,18 +21,15 @@
         <span> {{ $t('Online users') }} </span>
       </v-tooltip>
     </template>
-    <v-system-bar color="green">
-      <v-spacer />
-      <strong class="text-uppercase"> {{ $t('Online users') }} </strong>
-      <v-spacer />
-    </v-system-bar>
-    <v-list flat dense max-height="600" class="py-2">
-      <v-list-item dense v-for="(item, index) in users" :key="index">
-        <v-list-item-icon class="mr-1">
-          <v-icon small left> mdi-account-circle-outline </v-icon>
-        </v-list-item-icon>
+    <v-list flat subheader two-line>
+      <v-subheader inset class="text-uppercase"> {{ $t('Online users') }} </v-subheader>
+      <v-list-item v-for="user in users" :key="user.id" @click="sendMessage(user.id)">
+        <v-list-item-avatar class="mb-0 mt-0">
+          <v-icon> mdi-account-outline </v-icon>
+        </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title> {{ item }} </v-list-item-title>
+          <v-list-item-title>{{ user.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{ user.phone }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -49,6 +46,11 @@ export default {
   computed: {
     users() {
       return this.$store.state.users;
+    }
+  },
+  methods: {
+    sendMessage(id) {
+      console.log(`Send message to ${id}`);
     }
   }
 };

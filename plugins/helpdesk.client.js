@@ -25,26 +25,17 @@ const createScopeList = (router) => {
   }));
 };
 
-// const createClientSocket = (app, store) => {
-
-//   return socket;
-// };
-
 export default ({ app, store, redirect }, inject) => {
   const scopes = createScopeList(app.router);
 
   const navigation = createNavigationTree(app.router.options.routes);
 
-  // const socket = null; // = createClientSocket(app, store);
-
   const helpdesk = {
     user: null,
-    token: null,
+
     socket: null,
 
     ...navigation,
-
-    // socket,
 
     scopes: [...scopes, ...store.getters.scopes],
 
@@ -89,21 +80,23 @@ export default ({ app, store, redirect }, inject) => {
       });
 
       this.socket.on('connect', async () => {
-        this.user = await this.emit('auth:signin', { ...payload });
-        redirect('/#welcome-to-helpdesk');
+        try {
+          this.user = await this.emit('auth:signin', { ...payload });
+          app.$toast.success('Authorization passed');
+          redirect('/#welcome-to-helpdesk');
+        } catch (err) {
+          this.user = null;
+          this.socket = null;
+          app.$toast.success(this.$t(err));
+        }
       });
 
       this.socket.on('disconnect', () => {
         this.user = null;
-        this.token = null;
         redirect('/#see-you-helpdesk');
       });
 
-      this.socket.on('helpdesk:user:signin', (payload) => {
-        store.commit('updateUsers', payload);
-      });
-
-      this.socket.on('helpdesk:user:signout', (payload) => {
+      this.socket.on('helpdesk:users', (payload) => {
         store.commit('updateUsers', payload);
       });
 

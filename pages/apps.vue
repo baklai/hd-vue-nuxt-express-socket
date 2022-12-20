@@ -10,6 +10,8 @@ export default {
     appsubtitle: 'Helpdesk of the technical support department'
   },
 
+  middleware: ['is-scope'],
+
   layout: 'apps'
 };
 </script>

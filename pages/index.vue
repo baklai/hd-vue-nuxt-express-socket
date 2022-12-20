@@ -218,7 +218,6 @@ export default {
             password: this.password
           };
           await this.$helpdesk.login(user);
-          this.$toast.success(this.$t('Authorization passed'));
         } catch (err) {
           this.$toast.error(this.$t(err));
         }

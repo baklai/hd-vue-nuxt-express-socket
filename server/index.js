@@ -92,6 +92,14 @@ const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
 const cloudHandler = require('./handlers/cloud.handler');
 
+const socketUsers = (sockets) => {
+  const users = [];
+  sockets.forEach((item) => {
+    if (item.user) users.push(item.user);
+  });
+  return users;
+};
+
 io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
 
@@ -135,57 +143,9 @@ io.on('connection', async (socket) => {
 
   socket.on('disconnect', () => {
     if (socket.user) io.emit('helpdesk:user:signout', socket.user.name);
+    const users = socketUsers(io.sockets.sockets);
+    io.emit('helpdesk:users', users);
   });
-
-  // socket.on('disconnect', () => {
-  //   const user = users.remove(socket.id);
-  //   if (user) {
-  //     io.emit('updateUsers', users.getByRoom(user.room));
-  //     io.emit('newMessage', msg('info', `Пользователь ${user.name} вышел.`));
-  //   }
-  // });
-
-  // socket.on('userJoined', (data, callback) => {
-  //   if (!data.name || !data.room) {
-  //     return callback('Данные некорректны');
-  //   }
-  //   socket.join(data.room);
-  //   users.remove(socket.id);
-  //   users.add({
-  //     id: socket.id,
-  //     name: data.name,
-  //     room: data.room
-  //   });
-  //   callback({ userId: socket.id });
-  //   io.emit('updateUsers', users.getByRoom(data.room));
-  //   socket.emit('newMessage', msg('info', `Добро пожаловать ${data.name}`));
-  //   // socket.broadcast
-  //   //   .emit('newMessage', msg('info', `Пользователь ${data.name} зашел.`));
-  // });
-
-  // socket.on('createMessage', (data, callback) => {
-  //   if (!data.text) {
-  //     return callback('Текст не может быть пустым');
-  //   }
-  //   const user = users.get(data.id);
-  //   if (user) {
-  //     io.emit('newMessage', msg(user.name, data.text, data.id));
-  //   }
-  //   callback();
-  // });
-
-  // socket.on('userLeft', (id, callback) => {
-  //   const user = users.remove(id);
-  //   if (user) {
-  //     io.emit('updateUsers', users.getByRoom(user.room));
-  //     // io
-  //     //   .emit(
-  //     //     'newMessage',
-  //     //     msg('info', `Пользователь ${user.name} вышел.`)
-  //     //   );
-  //   }
-  //   callback();
-  // });
 });
 
 server.listen(PORT, () => {

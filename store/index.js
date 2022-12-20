@@ -181,7 +181,7 @@ export const mutations = {
   },
 
   updateUsers(state, val) {
-    state.users.push(val);
+    state.users = val;
   },
 
   setError(state, error) {

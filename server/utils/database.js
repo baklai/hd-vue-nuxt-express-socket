@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set("strictQuery", false);
+
 mongoose.plugin(require('../plugins/mongoose'));
 mongoose.plugin(require('mongoose-unique-validator'));
 mongoose.plugin(require('mongoose-autopopulate'));
