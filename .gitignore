@@ -90,6 +90,7 @@ typings/
 .nuxt
 dist
 client
+public
 
 # Catalog with certificates
 certs

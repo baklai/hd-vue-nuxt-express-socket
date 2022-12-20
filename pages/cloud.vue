@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid v-if="$config.fileHosting">
+  <v-container fill-height fluid>
     <v-row align="center" justify="center" grow>
       <v-col cols="12" xl="10" lg="8">
         <v-container fill-height fluid style="height: 80vh !important">
@@ -73,14 +73,7 @@
                       <strong>{{ $t('Create date') }}</strong> :
                       {{ item.mtime | dateToStr }}
                     </span>
-                    <v-btn
-                      small
-                      rounded
-                      download
-                      :href="item.path | sliceStatic"
-                      color="primary"
-                      class="mx-4"
-                    >
+                    <v-btn small rounded download :href="item.path" color="primary" class="mx-4">
                       {{ $t('Download') }}
                     </v-btn>
                   </div>
@@ -102,14 +95,17 @@ export default {
     appsubtitle: 'File hosting of the technical support department'
   },
 
-  layout({ $helpdesk }) {
-    return $helpdesk.loggedIn ? 'apps' : 'default';
+  layout: 'apps',
+
+  async asyncData({ store }) {
+    const fileHostingTree = await store.dispatch('api/cloud/findAll');
+    return { fileHostingTree };
   },
 
   data() {
     return {
       search: '',
-      initiallyOpen: ['docs'],
+      initiallyOpen: ['public'],
       files: {
         '.md': 'mdi-language-markdown',
         '.pdf': 'mdi-file-pdf',
@@ -131,10 +127,6 @@ export default {
   computed: {
     apppage() {
       return this.$store.getters.apppage;
-    },
-
-    fileHostingTree() {
-      return this.$config.fileHosting.children;
     }
   },
 
@@ -149,10 +141,6 @@ export default {
       return (
         (value / Math.pow(1024, index)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GiB', 'TB'][index]
       );
-    },
-
-    sliceStatic: function (value) {
-      return value.slice(6);
     }
   }
 };

@@ -159,12 +159,7 @@
           <v-list-item-title> {{ $t('Theme toggle') }} </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item
-        link
-        :to="$helpdesk.cloud.path"
-        v-if="$helpdesk.loggedIn && $config.fileHosting"
-        @click="menu = false"
-      >
+      <v-list-item link :to="$helpdesk.cloud.path" v-if="$helpdesk.loggedIn" @click="menu = false">
         <v-list-item-icon class="mr-4">
           <v-icon> {{ $helpdesk.cloud.appicon }} </v-icon>
         </v-list-item-icon>

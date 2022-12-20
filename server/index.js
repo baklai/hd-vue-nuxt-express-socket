@@ -39,6 +39,8 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 
+app.use('/public', express.static(path.join(__dirname, '..', 'public')));
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'client', '200.html'));
 });
@@ -88,6 +90,7 @@ const notificationHandler = require('./handlers/notification.handler');
 const eventHandler = require('./handlers/event.handler');
 const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
+const cloudHandler = require('./handlers/cloud.handler');
 
 io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
@@ -122,6 +125,7 @@ io.on('connection', async (socket) => {
   eventHandler(io, socket);
   statisticHandler(io, socket);
   loggerHandler(io, socket);
+  cloudHandler(io, socket);
 
   socket.on('helpdesk:message', (payload, callback) => {
     if (typeof payload === 'string') socket.broadcast.emit('helpdesk:message', payload);

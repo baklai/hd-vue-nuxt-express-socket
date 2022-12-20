@@ -47,12 +47,7 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item
-        link
-        :to="$helpdesk.cloud.path"
-        v-if="$config.fileHosting && $helpdesk.loggedIn"
-        class="my-2"
-      >
+      <v-list-item link :to="$helpdesk.cloud.path" v-if="$helpdesk.loggedIn" class="my-2">
         <v-tooltip right>
           <template v-slot:activator="{ on, attrs }">
             <v-list-item-icon v-bind="attrs" v-on="on">

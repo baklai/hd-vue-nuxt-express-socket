@@ -30,7 +30,6 @@ module.exports = (io, socket) => {
 
   const signout = async (payload, callback) => {
     try {
-      console.log(socket);
       socket.handshake.auth.token = null;
       io.emit('helpdesk:user:signout', payload);
       callback('Ok');

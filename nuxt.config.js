@@ -1,4 +1,3 @@
-import dirtree from 'directory-tree';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -24,15 +23,6 @@ export default {
   cli: {
     badgeMessages: [`Application: ${name.toUpperCase()}`, `Version:     ${version}`],
     bannerColor: 'blue'
-  },
-
-  publicRuntimeConfig: {
-    fileHosting:
-      dirtree(path.join(__dirname, 'static', 'docs'), {
-        extensions: /\.(md|pdf|png|txt|xls|doc|docx|zip|rar|cab|exe|msi)$/,
-        attributes: ['size', 'type', 'extension', 'atime', 'mtime', 'ctime', 'birthtime'],
-        normalizePath: true
-      }) || null
   },
 
   loading: false,

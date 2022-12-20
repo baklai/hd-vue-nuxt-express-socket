@@ -21,7 +21,7 @@
       <span> {{ $t('Full screen') }} </span>
     </v-tooltip>
 
-    <v-tooltip bottom v-if="$config.fileHosting">
+    <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon link v-on="on" v-bind="attrs" class="mx-2" :to="$helpdesk.cloud.path">
           <v-icon> {{ $helpdesk.cloud.appicon }} </v-icon>
