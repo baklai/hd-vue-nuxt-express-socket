@@ -92,7 +92,7 @@ const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
 const cloudHandler = require('./handlers/cloud.handler');
 
-const { socketUsers } = require('./utils/utils');
+const { socketUsers } = require('./utils/socket');
 
 io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));

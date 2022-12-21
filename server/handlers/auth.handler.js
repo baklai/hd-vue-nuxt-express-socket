@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
 const { toResponse, toSocket } = require('../models/user.model');
 
-const { socketUsers } = require('../utils/utils');
+const { socketUsers } = require('../utils/socket');
 
 module.exports = (io, socket) => {
   const signin = async (payload, callback) => {
