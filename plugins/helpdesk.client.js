@@ -85,7 +85,7 @@ export default ({ app, store, redirect }, inject) => {
           app.$toast.success('Authorization passed');
           redirect('/#welcome-to-helpdesk');
         } catch (err) {
-          this.socket.disconnect();
+          this.socket.close();
           app.$toast.error(err);
         }
       });
@@ -103,7 +103,6 @@ export default ({ app, store, redirect }, inject) => {
       });
 
       this.socket.on('disconnect', () => {
-        console.log('socket disconect');
         this.user = null;
         this.socket = null;
         redirect('/#see-you-helpdesk');
@@ -111,7 +110,7 @@ export default ({ app, store, redirect }, inject) => {
     },
 
     async logout() {
-      this.socket.disconnect();
+      this.socket.close();
     }
   };
 
