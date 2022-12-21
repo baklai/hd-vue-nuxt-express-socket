@@ -212,7 +212,7 @@ module.exports = (io, socket) => {
 
   const createOne = async (payload, callback) => {
     try {
-      //  const ipaddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      const ipaddress = socket.remoteAddress;
       const item = await Inspector.findOneAndUpdate(
         {
           host: ipaddress
