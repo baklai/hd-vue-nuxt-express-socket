@@ -173,7 +173,8 @@ const downloadVBS = async (req, res, next) => {
 
 const createReport = async (req, res, next) => {
   try {
-    const ipaddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const ipaddress =
+      req.headers['x-forwarded-for'] || req.socket.remoteAddress.replace(/^.*:/, '');
     await Inspector.findOneAndUpdate(
       {
         host: ipaddress

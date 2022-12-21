@@ -13,7 +13,9 @@ module.exports = (socket, unless) => {
   return async ([event, ...args], next) => {
     if (unless.includes(event)) return next();
     const log = await Logger.create({
-      address: socket.handshake.address ? socket.handshake.address : 'anonymous',
+      address: socket.handshake.address
+        ? socket.handshake.address.replace(/^.*:/, '')
+        : 'anonymous',
       user: socket?.user?.login ? socket.user.login : 'anonymous',
       event: event,
       datetime: socket?.handshake?.time
