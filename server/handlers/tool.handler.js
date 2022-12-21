@@ -2,7 +2,7 @@ const ping = require('pingman');
 
 module.exports = (io, socket) => {
   const getInspector = async (payload, callback) => {
-    const API = socket.handshake.headers.host;
+    const API = socket.handshake.headers.origin;
     try {
       const vbs = `
       'https://docs.microsoft.com/en-us/windows/win32/wmisdk/wmi-start-page
