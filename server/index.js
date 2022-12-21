@@ -92,13 +92,7 @@ const statisticHandler = require('./handlers/statistic.handler');
 const loggerHandler = require('./handlers/logger.handler');
 const cloudHandler = require('./handlers/cloud.handler');
 
-const socketUsers = (sockets) => {
-  const users = [];
-  sockets.forEach((item) => {
-    if (item.user) users.push(item.user);
-  });
-  return users;
-};
+const { socketUsers } = require('./utils/utils');
 
 io.on('connection', async (socket) => {
   socket.use(authMiddleware(socket, ['auth:signin']));
@@ -142,7 +136,7 @@ io.on('connection', async (socket) => {
   socket.on('error', errorMiddleware(socket, 'helpdesk:error'));
 
   socket.on('disconnect', () => {
-    if (socket.user) io.emit('helpdesk:user:signout', socket.user.name);
+    if (socket.user) io.emit('helpdesk:message', `${socket.user.name} is logged out`);
     const users = socketUsers(io.sockets.sockets);
     io.emit('helpdesk:users', users);
   });

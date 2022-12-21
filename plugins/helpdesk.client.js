@@ -85,15 +85,9 @@ export default ({ app, store, redirect }, inject) => {
           app.$toast.success('Authorization passed');
           redirect('/#welcome-to-helpdesk');
         } catch (err) {
-          this.user = null;
-          this.socket = null;
-          app.$toast.success(this.$t(err));
+          this.socket.disconnect();
+          app.$toast.error(err);
         }
-      });
-
-      this.socket.on('disconnect', () => {
-        this.user = null;
-        redirect('/#see-you-helpdesk');
       });
 
       this.socket.on('helpdesk:users', (payload) => {
@@ -107,12 +101,17 @@ export default ({ app, store, redirect }, inject) => {
       this.socket.on('helpdesk:error', (payload) => {
         if (typeof payload === 'string') app.$toast.error(payload);
       });
+
+      this.socket.on('disconnect', () => {
+        console.log('socket disconect');
+        this.user = null;
+        this.socket = null;
+        redirect('/#see-you-helpdesk');
+      });
     },
 
     async logout() {
-      this.user = null;
-      await this.emit('auth:signout', {});
-      return redirect(`/#see-you-helpdesk`);
+      this.socket.disconnect();
     }
   };
 

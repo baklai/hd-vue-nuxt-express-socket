@@ -1,4 +1,5 @@
 process.on('uncaughtException', (err) => {
+  console.log(err);
   console.error(`${new Date().toUTCString()} uncaughtException: ${err.message}`);
   process.exit(1);
 });
