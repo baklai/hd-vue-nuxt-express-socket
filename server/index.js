@@ -104,7 +104,7 @@ io.on('connection', async (socket) => {
   socket.use(
     scopeMiddleware(socket, [
       'auth:signin',
-      'auth:signout',
+      'cloud:find:all',
       'notification:find:all',
       'notification:remove:one'
     ])
