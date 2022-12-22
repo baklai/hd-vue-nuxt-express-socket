@@ -118,7 +118,8 @@ export default {
         '.rar': 'mdi-zip-box-outline',
         '.cab': 'mdi-zip-box-outline',
         '.exe': 'mdi-file-code-outline',
-        '.msi': 'mdi-file-code-outline'
+        '.msi': 'mdi-file-code-outline',
+        '.msu': 'mdi-file-code-outline'
       },
       tree: []
     };
