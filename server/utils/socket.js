@@ -3,7 +3,12 @@ const socketUsers = (sockets) => {
   sockets.forEach((item) => {
     if (item.user) users.push(item.user);
   });
-  return users;
+  return users.reduce(
+    (prev, curr) => (
+      prev.map((item) => item.id).includes(curr.id) || prev.push(curr), prev
+    ),
+    []
+  );
 };
 
 module.exports = { socketUsers };
