@@ -548,23 +548,26 @@ export default {
       loading: true,
       items: [],
       total: 0,
-      options: {},
-
-      filters: {
-        workerOpen: '',
-        workerClose: '',
-        closed: '',
-        location: '',
-        company: '',
-        branch: '',
-        enterprise: '',
-        department: '',
-        ipaddress: '',
-        fullname: '',
-        position: '',
-        phone: '',
-        mail: ''
-      }
+      filters: localStorage[`${this.$route.name}.filters`]
+        ? JSON.parse(localStorage.getItem(`${this.$route.name}.filters`))
+        : {
+            workerOpen: '',
+            workerClose: '',
+            closed: '',
+            location: '',
+            company: '',
+            branch: '',
+            enterprise: '',
+            department: '',
+            ipaddress: '',
+            fullname: '',
+            position: '',
+            phone: '',
+            mail: ''
+          },
+      options: localStorage[`${this.$route.name}.options`]
+        ? JSON.parse(localStorage.getItem(`${this.$route.name}.options`))
+        : {}
     };
   },
 
@@ -591,15 +594,6 @@ export default {
       },
       deep: true
     }
-  },
-
-  async mounted() {
-    this.filters = localStorage[`${this.$route.name}.filters`]
-      ? JSON.parse(localStorage.getItem(`${this.$route.name}.filters`))
-      : this.filters;
-    this.options = localStorage[`${this.$route.name}.options`]
-      ? JSON.parse(localStorage.getItem(`${this.$route.name}.options`))
-      : this.options;
   },
 
   computed: {

@@ -1,6 +1,10 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('ipaddress:remove:one')" />
+    <ModalsDelete
+      ref="delete"
+      @closeEvent="getItems"
+      v-if="$hasScope('ipaddress:remove:one')"
+    />
     <ModalsIPAddress
       ref="ipaddress"
       @closeEvent="getItems"
@@ -40,11 +44,20 @@
           </v-list-item>
           <v-spacer />
           <v-responsive width="210" class="mr-2">
-            <CustomFilterInput v-model="filters.ipaddress" :label="$t('Search IP Address')" />
+            <CustomFilterInput
+              v-model="filters.ipaddress"
+              :label="$t('Search IP Address')"
+            />
           </v-responsive>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="cleanFilters()" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="cleanFilters()"
+                class="mx-2"
+              >
                 <v-icon> mdi-filter-remove-outline </v-icon>
               </v-btn>
             </template>
@@ -52,7 +65,13 @@
           </v-tooltip>
           <v-tooltip bottom v-if="$hasScope('ipaddress:create:one')">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="onItem(null)" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="onItem(null)"
+                class="mx-2"
+              >
                 <v-icon> mdi-plus-circle-outline </v-icon>
               </v-btn>
             </template>
@@ -60,7 +79,13 @@
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="getItems" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="getItems"
+                class="mx-2"
+              >
                 <v-icon> mdi-cached </v-icon>
               </v-btn>
             </template>
@@ -107,7 +132,10 @@
                 {{ $t('Clear filters') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItem(null)" v-if="$hasScope('ipaddress:create:one')">
+            <v-list-item
+              @click="onItem(null)"
+              v-if="$hasScope('ipaddress:create:one')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-plus-circle-outline </v-icon>
               </v-list-item-icon>
@@ -120,7 +148,10 @@
         <v-menu
           top
           offset-y
-          v-if="$hasScope('ipaddress:export:table') || $hasScope('ipaddress:export:internet')"
+          v-if="
+            $hasScope('ipaddress:export:table') ||
+            $hasScope('ipaddress:export:internet')
+          "
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
@@ -162,10 +193,22 @@
         <v-menu top offset-y>
           <ModalsCompany ref="company" v-if="$hasScope('company:find:all')" />
           <ModalsBranch ref="branch" v-if="$hasScope('branch:find:all')" />
-          <ModalsEnterprise ref="enterprise" v-if="$hasScope('enterprise:find:all')" />
-          <ModalsDepartment ref="department" v-if="$hasScope('department:find:all')" />
-          <ModalsLocation ref="location" v-if="$hasScope('location:find:all')" />
-          <ModalsPosition ref="position" v-if="$hasScope('position:find:all')" />
+          <ModalsEnterprise
+            ref="enterprise"
+            v-if="$hasScope('enterprise:find:all')"
+          />
+          <ModalsDepartment
+            ref="department"
+            v-if="$hasScope('department:find:all')"
+          />
+          <ModalsLocation
+            ref="location"
+            v-if="$hasScope('location:find:all')"
+          />
+          <ModalsPosition
+            ref="position"
+            v-if="$hasScope('position:find:all')"
+          />
           <ModalsUnit ref="unit" v-if="$hasScope('unit:find:all')" />
 
           <template v-slot:activator="{ on, attrs }">
@@ -176,7 +219,10 @@
             </v-btn>
           </template>
           <v-list flat dense>
-            <v-list-item @click="$refs.company.onItem(null)" v-if="$hasScope('company:find:all')">
+            <v-list-item
+              @click="$refs.company.onItem(null)"
+              v-if="$hasScope('company:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -184,7 +230,10 @@
                 {{ $t('DB Company') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.branch.onItem(null)" v-if="$hasScope('branch:find:all')">
+            <v-list-item
+              @click="$refs.branch.onItem(null)"
+              v-if="$hasScope('branch:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -214,7 +263,10 @@
                 {{ $t('DB Department') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.location.onItem(null)" v-if="$hasScope('location:find:all')">
+            <v-list-item
+              @click="$refs.location.onItem(null)"
+              v-if="$hasScope('location:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -222,7 +274,10 @@
                 {{ $t('DB Location') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.position.onItem(null)" v-if="$hasScope('position:find:all')">
+            <v-list-item
+              @click="$refs.position.onItem(null)"
+              v-if="$hasScope('position:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -230,7 +285,10 @@
                 {{ $t('DB Position') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.unit.onItem(null)" v-if="$hasScope('unit:find:all')">
+            <v-list-item
+              @click="$refs.unit.onItem(null)"
+              v-if="$hasScope('unit:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -315,7 +373,10 @@
 
       <template v-slot:[`header.fullname`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.fullname" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.fullname"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.position`]="{ header }">
@@ -331,17 +392,26 @@
 
       <template v-slot:[`header.phone`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.phone" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.phone"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.mail`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.mail" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.mail"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.autoanswer`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.autoanswer" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.autoanswer"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.internet`]="{ header }">
@@ -354,7 +424,10 @@
 
       <template v-slot:[`header.email`]="{ header }">
         {{ header.text }}
-        <CustomFilterSwitch v-model="filters.email" :label="$t('Show only E-mails activated')" />
+        <CustomFilterSwitch
+          v-model="filters.email"
+          :label="$t('Show only E-mails activated')"
+        />
       </template>
 
       <template v-slot:[`item.actions`]="{ item }">
@@ -366,7 +439,10 @@
           </template>
           <v-list flat dense>
             <HostDefActions :host="item.ipaddress" />
-            <v-list-item @click="onItem(item.id)" v-if="$hasScope('ipaddress:update:one')">
+            <v-list-item
+              @click="onItem(item.id)"
+              v-if="$hasScope('ipaddress:update:one')"
+            >
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-note-edit-outline </v-icon>
               </v-list-item-icon>
@@ -374,7 +450,10 @@
                 {{ $t('Edit record') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('ipaddress:remove:one')">
+            <v-list-item
+              @click="onItemDel(item.id)"
+              v-if="$hasScope('ipaddress:remove:one')"
+            >
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -441,7 +520,10 @@
         </v-icon>
       </template>
     </v-data-table>
-    <ReportsDrawerIPAddress ref="drawer" v-if="$hasScope('ipaddress:find:one')" />
+    <ReportsDrawerIPAddress
+      ref="drawer"
+      v-if="$hasScope('ipaddress:find:one')"
+    />
   </v-container>
 </template>
 
@@ -454,16 +536,23 @@ export default {
   },
 
   async asyncData({ store }) {
-    const [units, locations, positions, companies, branches, enterprises, departments] =
-      await Promise.all([
-        store.dispatch('api/unit/findAll', {}),
-        store.dispatch('api/location/findAll', {}),
-        store.dispatch('api/position/findAll', {}),
-        store.dispatch('api/company/findAll', {}),
-        store.dispatch('api/branch/findAll', {}),
-        store.dispatch('api/enterprise/findAll', {}),
-        store.dispatch('api/department/findAll', {})
-      ]);
+    const [
+      units,
+      locations,
+      positions,
+      companies,
+      branches,
+      enterprises,
+      departments
+    ] = await Promise.all([
+      store.dispatch('api/unit/findAll', {}),
+      store.dispatch('api/location/findAll', {}),
+      store.dispatch('api/position/findAll', {}),
+      store.dispatch('api/company/findAll', {}),
+      store.dispatch('api/branch/findAll', {}),
+      store.dispatch('api/enterprise/findAll', {}),
+      store.dispatch('api/department/findAll', {})
+    ]);
     return {
       units,
       locations,
@@ -479,33 +568,39 @@ export default {
     return {
       windowSize: { x: 0, y: 0 },
       loading: false,
-      freeip: false,
       items: [],
       total: 0,
-      options: {},
-      filters: {
-        location: '',
-        unit: '',
-        ipaddress: '',
-        company: '',
-        branch: '',
-        enterprise: '',
-        department: '',
-        fullname: '',
-        position: '',
-        phone: '',
-        mail: '',
-        autoanswer: '',
-        internet: '',
-        email: ''
-      }
+      filters: localStorage[`${this.$route.name}.filters`]
+        ? JSON.parse(localStorage.getItem(`${this.$route.name}.filters`))
+        : {
+            location: '',
+            unit: '',
+            ipaddress: '',
+            company: '',
+            branch: '',
+            enterprise: '',
+            department: '',
+            fullname: '',
+            position: '',
+            phone: '',
+            mail: '',
+            autoanswer: '',
+            internet: '',
+            email: ''
+          },
+      options: localStorage[`${this.$route.name}.options`]
+        ? JSON.parse(localStorage.getItem(`${this.$route.name}.options`))
+        : {}
     };
   },
 
   watch: {
     filters: {
       handler(value) {
-        localStorage.setItem(`${this.$route.name}.filters`, JSON.stringify(value));
+        localStorage.setItem(
+          `${this.$route.name}.filters`,
+          JSON.stringify(value)
+        );
         this.options.page = 1;
         this.getItems();
       },
@@ -514,20 +609,14 @@ export default {
 
     options: {
       handler(value) {
-        localStorage.setItem(`${this.$route.name}.options`, JSON.stringify(value));
+        localStorage.setItem(
+          `${this.$route.name}.options`,
+          JSON.stringify(value)
+        );
         this.getItems();
       },
       deep: true
     }
-  },
-
-  async mounted() {
-    this.filters = localStorage[`${this.$route.name}.filters`]
-      ? JSON.parse(localStorage.getItem(`${this.$route.name}.filters`))
-      : this.filters;
-    this.options = localStorage[`${this.$route.name}.options`]
-      ? JSON.parse(localStorage.getItem(`${this.$route.name}.options`))
-      : this.options;
   },
 
   computed: {
@@ -752,13 +841,19 @@ export default {
         for (let item of items.docs) {
           if (item.status.internet) {
             data.push(
-              `${item.ipaddress} # % ${item.location ? item.location.title : '-'} % ${
-                item.branch ? item.branch.title : '-'
-              } % ${item.enterprise ? item.enterprise.title : '-'} % ${
-                item.department ? item.department.title : '-'
-              } % ${item.position ? item.position.title : '-'} % ${item.fullname} % ${
+              `${item.ipaddress} # % ${
+                item.location ? item.location.title : '-'
+              } % ${item.branch ? item.branch.title : '-'} % ${
+                item.enterprise ? item.enterprise.title : '-'
+              } % ${item.department ? item.department.title : '-'} % ${
+                item.position ? item.position.title : '-'
+              } % ${item.fullname} % ${
                 item.internet ? item.internet.mail : '-'
-              } % ${item.internet ? new Date(item.internet.dateOpen).toLocaleDateString() : '-'}`
+              } % ${
+                item.internet
+                  ? new Date(item.internet.dateOpen).toLocaleDateString()
+                  : '-'
+              }`
             );
           }
         }
