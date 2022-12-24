@@ -1,10 +1,23 @@
+const path = require('path');
+const dotenv = require('dotenv');
+const http = require('http');
 const compression = require('compression');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('express-jwt');
+const { Server } = require('socket.io');
 
-const { MONGO_URI, BCRYPT_SALT, JWT_SECRET_KEY } = require('./config/api.config');
+process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
+
+dotenv.config({
+  path:
+    process.env.NODE_ENV === 'production'
+      ? path.join(__dirname, '..', '.env.prod')
+      : path.join(__dirname, '..', '.env.dev')
+});
+
+const { PORT, HOST, MONGO_URI, BCRYPT_SALT, JWT_SECRET_KEY } = require('./config/api.config');
 
 const connectToMongo = require('./utils/database');
 
@@ -38,6 +51,7 @@ const app = express();
 app.use(
   cors({
     origin: '*',
+    credentials: true,
     optionsSuccessStatus: 200,
     methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
   })
@@ -47,6 +61,10 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', '200.html'));
+});
 
 app.use(
   logger({ connectionString: MONGO_URI }).unless({
@@ -68,25 +86,29 @@ app.use(
   })
 );
 
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
-app.use('/tool', toolRoutes);
-app.use('/location', locationRoutes);
-app.use('/position', positionRoutes);
-app.use('/unit', unitRoutes);
-app.use('/company', companyRoutes);
-app.use('/branch', branchRoutes);
-app.use('/enterprise', enterpriseRoutes);
-app.use('/department', departmentRoutes);
-app.use('/channel', channelRoutes);
-app.use('/vpn', vpnRoutes);
-app.use('/ipaddress', ipaddressRoutes);
-app.use('/request', requestRoutes);
-app.use('/inspector', inspectorRoutes);
-app.use('/notification', notificationRoutes);
-app.use('/event', eventRoutes);
-app.use('/statistic', statisticRoutes);
-app.use('/logger', loggerRoutes);
+app.use(express.static(path.join(__dirname, '..', 'client')));
+
+app.use('/public', express.static(path.join(__dirname, '..', 'public')));
+
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/tool', toolRoutes);
+app.use('/api/v1/location', locationRoutes);
+app.use('/api/v1/position', positionRoutes);
+app.use('/api/v1/unit', unitRoutes);
+app.use('/api/v1/company', companyRoutes);
+app.use('/api/v1/branch', branchRoutes);
+app.use('/api/v1/enterprise', enterpriseRoutes);
+app.use('/api/v1/department', departmentRoutes);
+app.use('/api/v1/channel', channelRoutes);
+app.use('/api/v1/vpn', vpnRoutes);
+app.use('/api/v1/ipaddress', ipaddressRoutes);
+app.use('/api/v1/request', requestRoutes);
+app.use('/api/v1/inspector', inspectorRoutes);
+app.use('/api/v1/notification', notificationRoutes);
+app.use('/api/v1/event', eventRoutes);
+app.use('/api/v1/statistic', statisticRoutes);
+app.use('/api/v1/logger', loggerRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Oops! Error 404 has occurred' });
@@ -96,6 +118,8 @@ app.use((err, req, res, next) => {
   apiError(err, res);
 });
 
-console.info('API server success is running');
+const server = http.createServer(app);
 
-module.exports = app;
+server.listen(PORT, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
+});

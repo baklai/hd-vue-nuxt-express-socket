@@ -1,5 +1,6 @@
-const consola = require('consola');
 const mongoose = require('mongoose');
+
+mongoose.set('strictQuery', false);
 
 mongoose.plugin(require('../plugins/mongoose'));
 mongoose.plugin(require('mongoose-unique-validator'));
@@ -14,13 +15,13 @@ const mongodb = async (MONGO_URI, BCRYPT_SALT) => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
-    console.info('Success MongoDB connected');
+    console.log('Success MongoDB connected');
     await User.setDefaultAdmin(
       {
         login: 'helpdesk',
-        password: 'ksedpleh',
+        password: 'helpdesk',
         name: 'Administrator',
-        email: 'root@helpdesk.io',
+        email: 'helpdesk@helpdesk.io',
         isActive: true,
         isAdmin: true
       },

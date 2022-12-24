@@ -1,9 +1,7 @@
-import dirtree from 'directory-tree';
 import dotenv from 'dotenv';
 import path from 'path';
-import fs from 'fs';
 
-import { config } from './package.json';
+import { name, version, config } from './package.json';
 
 dotenv.config({
   path:
@@ -14,35 +12,25 @@ dotenv.config({
 
 export default {
   telemetry: false,
-  ssr: true,
+  ssr: false,
+
+  target: 'static',
+
+  generate: {
+    dir: 'client'
+  },
 
   cli: {
-    badgeMessages: [
-      `Application: ${process.env.npm_package_name.toUpperCase()}`,
-      `Version:     ${process.env.npm_package_version}`
-    ],
+    badgeMessages: [`Application: ${name.toUpperCase()}`, `Version:     ${version}`],
     bannerColor: 'blue'
   },
 
-  publicRuntimeConfig: {
-    fileHosting:
-      dirtree('./static/docs', {
-        extensions: /\.(md|pdf|png|txt|xls|doc|docx|zip|rar|cab|exe|msi)$/,
-        attributes: ['size', 'type', 'extension', 'atime', 'mtime', 'ctime', 'birthtime'],
-        normalizePath: true
-      }) || null
-  },
+  // loading: false,
 
-  server: {
-    port: process.env.NODE_ENV === 'production' ? 443 : 3000,
-    host: process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost',
-    https:
-      process.env.NODE_ENV === 'production'
-        ? {
-            key: fs.readFileSync(path.resolve(__dirname, 'certs', 'server.key')),
-            cert: fs.readFileSync(path.resolve(__dirname, 'certs', 'server.crt'))
-          }
-        : false
+  loadingIndicator: {
+    name: 'cube-grid',
+    color: '#F5F5F5',
+    background: '#FFFFFF'
   },
 
   router: {
@@ -65,15 +53,13 @@ export default {
       },
       { name: 'google', content: 'notranslate' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [
+      { rel: 'stylesheet', href: '/css/loading.css' },
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
 
   components: true,
-
-  loading: {
-    color: '#2196F3',
-    height: '2px'
-  },
 
   css: [
     '@mdi/font/css/materialdesignicons.min.css',
@@ -81,12 +67,18 @@ export default {
     '~/assets/vuetify.css'
   ],
 
-  plugins: ['~/plugins/clipboard.client', '~/plugins/theme.client', '~/plugins/helpdesk.client'],
+  plugins: [
+    '~/plugins/clipboard.client',
+    '~/plugins/theme.client',
+    '~/plugins/helpdesk.client',
+    '~/plugins/has-scope.client'
+  ],
 
   buildModules: ['@nuxtjs/vuetify'],
 
   modules: [
     'nuxt-route-meta',
+    'nuxt-socket-io',
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxt/content',
@@ -94,15 +86,28 @@ export default {
     '@nuxtjs/toast'
   ],
 
+  io: {
+    warnings: false,
+    sockets: [
+      {
+        name: 'helpdesk',
+        default: true,
+        url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001'
+      }
+    ]
+  },
+
   axios: {
-    proxy: true,
-    prefix: '/api/v1/',
-    credentials: true,
-    https: process.env.NODE_ENV === 'production' ? true : false
+    proxy: false,
+    browserBaseURL: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001/api/v1/',
+    baseURL: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001/api/v1/',
+    //   prefix: '/api/v1/',
+    credentials: false
   },
 
   content: {
-    apiPrefix: 'content'
+    apiPrefix: 'content',
+    useCache: false
   },
 
   auth: {
@@ -245,15 +250,8 @@ export default {
     }
   },
 
-  serverMiddleware: [
-    {
-      path: '/api/v1',
-      handler: '~/api/index.js',
-      prefix: false
-    }
-  ],
-
   build: {
-    publicPath: 'cdn/'
+    publicPath: 'cdn/',
+    transpile: ['vuetify', 'vuetify/lib']
   }
 };
