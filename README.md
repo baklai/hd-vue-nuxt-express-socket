@@ -6,6 +6,13 @@ Web Application of technical support department.
 
 ## Demo application -> [Helpdesk service](https://helpdesk-service.herokuapp.com/)
 
+Login to the application
+
+```bash
+  LOGIN: helpdesk
+  PASSWORD: helpdesk
+```
+
 ## Prerequisites
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
@@ -14,7 +21,7 @@ Web Application of technical support department.
 ## Downloading
 
 ```bash
-git clone 
+git clone
 ```
 
 ## Installing NPM modules
