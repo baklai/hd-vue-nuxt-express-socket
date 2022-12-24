@@ -1,7 +1,15 @@
 <template>
   <v-container fill-height fluid class="pa-0" v-resize="onResize">
-    <ModalsDelete ref="delete" @closeEvent="getItems" v-if="$hasScope('request:remove:one')" />
-    <ModalsRequest ref="request" @closeEvent="getItems" v-if="$hasScope('request:find:one')" />
+    <ModalsDelete
+      ref="delete"
+      @closeEvent="getItems"
+      v-if="$hasScope('request:remove:one')"
+    />
+    <ModalsRequest
+      ref="request"
+      @closeEvent="getItems"
+      v-if="$hasScope('request:find:one')"
+    />
     <v-data-table
       dense
       item-key="id"
@@ -38,11 +46,20 @@
           </v-list-item>
           <v-spacer />
           <v-responsive width="240" class="mr-2">
-            <CustomFilterInput v-model="filters.search" :label="$t('Search request')" />
+            <CustomFilterInput
+              v-model="filters.search"
+              :label="$t('Search request')"
+            />
           </v-responsive>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="cleanFilters()" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="cleanFilters()"
+                class="mx-2"
+              >
                 <v-icon> mdi-filter-remove-outline </v-icon>
               </v-btn>
             </template>
@@ -50,7 +67,13 @@
           </v-tooltip>
           <v-tooltip bottom v-if="$hasScope('request:create:one')">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="onItem(null)" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="onItem(null)"
+                class="mx-2"
+              >
                 <v-icon> mdi-plus-circle-outline </v-icon>
               </v-btn>
             </template>
@@ -58,7 +81,13 @@
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-on="on" v-bind="attrs" @click="getItems" class="mx-2">
+              <v-btn
+                icon
+                v-on="on"
+                v-bind="attrs"
+                @click="getItems"
+                class="mx-2"
+              >
                 <v-icon> mdi-cached </v-icon>
               </v-btn>
             </template>
@@ -105,7 +134,10 @@
                 {{ $t('Update records') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItem(null)" v-if="$hasScope('request:create:one')">
+            <v-list-item
+              @click="onItem(null)"
+              v-if="$hasScope('request:create:one')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-plus-circle-outline </v-icon>
               </v-list-item-icon>
@@ -146,10 +178,22 @@
         <v-menu top offset-y>
           <ModalsCompany ref="company" v-if="$hasScope('company:find:all')" />
           <ModalsBranch ref="branch" v-if="$hasScope('branch:find:all')" />
-          <ModalsEnterprise ref="enterprise" v-if="$hasScope('enterprise:find:all')" />
-          <ModalsDepartment ref="department" v-if="$hasScope('department:find:all')" />
-          <ModalsLocation ref="location" v-if="$hasScope('location:find:all')" />
-          <ModalsPosition ref="position" v-if="$hasScope('position:find:all')" />
+          <ModalsEnterprise
+            ref="enterprise"
+            v-if="$hasScope('enterprise:find:all')"
+          />
+          <ModalsDepartment
+            ref="department"
+            v-if="$hasScope('department:find:all')"
+          />
+          <ModalsLocation
+            ref="location"
+            v-if="$hasScope('location:find:all')"
+          />
+          <ModalsPosition
+            ref="position"
+            v-if="$hasScope('position:find:all')"
+          />
 
           <template v-slot:activator="{ on, attrs }">
             <v-btn small text outlined v-bind="attrs" v-on="on" class="ml-2">
@@ -159,7 +203,10 @@
             </v-btn>
           </template>
           <v-list flat dense>
-            <v-list-item @click="$refs.company.onItem(null)" v-if="$hasScope('company:find:all')">
+            <v-list-item
+              @click="$refs.company.onItem(null)"
+              v-if="$hasScope('company:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -167,7 +214,10 @@
                 {{ $t('DB Company') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.branch.onItem(null)" v-if="$hasScope('branch:find:all')">
+            <v-list-item
+              @click="$refs.branch.onItem(null)"
+              v-if="$hasScope('branch:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -197,7 +247,10 @@
                 {{ $t('DB Department') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.location.onItem(null)" v-if="$hasScope('location:find:all')">
+            <v-list-item
+              @click="$refs.location.onItem(null)"
+              v-if="$hasScope('location:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -205,7 +258,10 @@
                 {{ $t('DB Location') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="$refs.position.onItem(null)" v-if="$hasScope('position:find:all')">
+            <v-list-item
+              @click="$refs.position.onItem(null)"
+              v-if="$hasScope('position:find:all')"
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon small> mdi-database-search-outline </v-icon>
               </v-list-item-icon>
@@ -246,7 +302,10 @@
 
       <template v-slot:[`header.status`]="{ header }">
         {{ header.text }}
-        <CustomFilterSwitch v-model="filters.closed" :label="$t('Show only open requests')" />
+        <CustomFilterSwitch
+          v-model="filters.closed"
+          :label="$t('Show only open requests')"
+        />
       </template>
 
       <template v-slot:[`header.workerClose`]="{ header }">
@@ -306,12 +365,18 @@
 
       <template v-slot:[`header.ipaddress`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.ipaddress" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.ipaddress"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.fullname`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.fullname" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.fullname"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.position`]="{ header }">
@@ -327,12 +392,18 @@
 
       <template v-slot:[`header.phone`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.phone" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.phone"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`header.mail`]="{ header }">
         {{ header.text }}
-        <CustomFilterTextField v-model="filters.mail" :label="$t('Search in column')" />
+        <CustomFilterTextField
+          v-model="filters.mail"
+          :label="$t('Search in column')"
+        />
       </template>
 
       <template v-slot:[`item.actions`]="{ item }">
@@ -344,7 +415,10 @@
           </template>
           <v-list flat dense>
             <HostDefActions v-if="item.ipaddress" :host="item.ipaddress" />
-            <v-list-item @click="onItem(item.id)" v-if="$hasScope('request:update:one')">
+            <v-list-item
+              @click="onItem(item.id)"
+              v-if="$hasScope('request:update:one')"
+            >
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-pencil-outline </v-icon>
               </v-list-item-icon>
@@ -352,7 +426,10 @@
                 {{ $t('Edit record') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="onItemDel(item.id)" v-if="$hasScope('request:remove:one')">
+            <v-list-item
+              @click="onItemDel(item.id)"
+              v-if="$hasScope('request:remove:one')"
+            >
               <v-list-item-icon class="mr-1">
                 <v-icon small> mdi-trash-can-outline </v-icon>
               </v-list-item-icon>
@@ -377,7 +454,11 @@
 
       <template v-slot:[`item.status`]="{ item }">
         <v-icon small :color="item.closed ? 'green' : 'red'">
-          {{ item.closed ? 'mdi-checkbox-marked-circle-outline' : 'mdi-radiobox-blank' }}
+          {{
+            item.closed
+              ? 'mdi-checkbox-marked-circle-outline'
+              : 'mdi-radiobox-blank'
+          }}
         </v-icon>
       </template>
 
@@ -430,14 +511,26 @@ export default {
     apptitle: 'Operational journal',
     appsubtitle: 'Operational journal of the technical support department'
   },
+
   async asyncData({ store }) {
-    const users = await store.dispatch('api/user/findAll', {});
-    const locations = await store.dispatch('api/location/findAll', {});
-    const companies = await store.dispatch('api/company/findAll', {});
-    const branches = await store.dispatch('api/branch/findAll', {});
-    const enterprises = await store.dispatch('api/enterprise/findAll', {});
-    const departments = await store.dispatch('api/department/findAll', {});
-    const positions = await store.dispatch('api/position/findAll', {});
+    const [
+      users,
+      locations,
+      companies,
+      branches,
+      enterprises,
+      departments,
+      positions
+    ] = await Promise.all([
+      store.dispatch('api/user/findAll', {}),
+      store.dispatch('api/location/findAll', {}),
+      store.dispatch('api/company/findAll', {}),
+      store.dispatch('api/branch/findAll', {}),
+      store.dispatch('api/enterprise/findAll', {}),
+      store.dispatch('api/department/findAll', {}),
+      store.dispatch('api/position/findAll', {})
+    ]);
+
     return {
       users,
       companies,
@@ -448,6 +541,7 @@ export default {
       locations
     };
   },
+
   data() {
     return {
       windowSize: { x: 0, y: 0 },
@@ -477,7 +571,10 @@ export default {
   watch: {
     filters: {
       handler(value) {
-        localStorage.setItem(`${this.$route.name}.filters`, JSON.stringify(value));
+        localStorage.setItem(
+          `${this.$route.name}.filters`,
+          JSON.stringify(value)
+        );
         this.options.page = 1;
         this.getItems();
       },
@@ -486,7 +583,10 @@ export default {
 
     options: {
       handler(value) {
-        localStorage.setItem(`${this.$route.name}.options`, JSON.stringify(value));
+        localStorage.setItem(
+          `${this.$route.name}.options`,
+          JSON.stringify(value)
+        );
         this.getItems();
       },
       deep: true
