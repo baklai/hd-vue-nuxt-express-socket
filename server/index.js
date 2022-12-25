@@ -74,6 +74,7 @@ const authMiddleware = require('./middleware/auth');
 const scopeMiddleware = require('./middleware/scope');
 const loggerMiddleware = require('./middleware/logger');
 const errorMiddleware = require('./middleware/error');
+const timeoutMiddleware = require('./middleware/timeout');
 
 const authHandler = require('./handlers/auth.handler');
 const userHandler = require('./handlers/user.handler');
@@ -111,6 +112,8 @@ io.on('connection', async (socket) => {
   );
 
   socket.use(loggerMiddleware(socket, ['logger:find:all', 'logger:remove:all']));
+
+  socket.use(timeoutMiddleware(socket, ['auth:signin']));
 
   authHandler(io, socket);
   userHandler(io, socket);

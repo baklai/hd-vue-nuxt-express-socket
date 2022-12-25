@@ -45,6 +45,8 @@
       <span> {{ $t('Theme toggle') }} </span>
     </v-tooltip>
 
+    <AppSessionTimer />
+
     <AppUsersOnline />
     <AppNotification />
     <AppMainMenuBtn />
