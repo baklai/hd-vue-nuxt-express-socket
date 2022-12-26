@@ -147,6 +147,9 @@
             <v-list-item-title> {{ $t('Theme toggle') }} </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item v-if="$helpdesk.loggedIn" class="mb-2">
+          <AppSessionTimer />
+        </v-list-item>
         <v-divider class="mx-4" />
         <v-list-item link v-if="$helpdesk.loggedIn" @click="Logout">
           <v-tooltip right>
