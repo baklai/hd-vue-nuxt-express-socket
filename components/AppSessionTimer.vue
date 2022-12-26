@@ -1,7 +1,14 @@
 <template>
   <v-tooltip right v-if="$helpdesk.loggedIn">
     <template v-slot:activator="{ on, attrs }">
-      <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" v-on="on" v-bind="attrs">
+      <svg
+        width="24"
+        height="24"
+        xmlns="http://www.w3.org/2000/svg"
+        v-on="on"
+        v-bind="attrs"
+        class="cursor-help"
+      >
         <g>
           <path
             :fill="currentColor"
@@ -23,7 +30,7 @@
         </g>
       </svg>
     </template>
-    <span> {{ $t('Time out') }} </span>
+    <span> {{ $t('Time out') }} ~ {{ timeout }} {{ $t('minutes') }}</span>
   </v-tooltip>
 </template>
 
@@ -57,3 +64,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.cursor-help {
+  cursor: help !important;
+}
+</style>
