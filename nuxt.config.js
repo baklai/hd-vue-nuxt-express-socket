@@ -84,7 +84,10 @@ export default {
       {
         name: 'helpdesk',
         default: true,
-        url: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3001'
+        url:
+          process.env.NODE_ENV === 'production'
+            ? '/'
+            : `http://${process.env.HOST}:${process.env.PORT}`
       }
     ]
   },

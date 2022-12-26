@@ -33,12 +33,12 @@ $ npm install
 
 ## Project env variables
 
-| Key                | Comment          |
-| ------------------ | ---------------- |
-| `MONGO_URI`        | Mongo url        |
-| `BCRYPT_SALT`      | BCRYPT SALT      |
-| `JWT_SECRET_KEY`   | JWT_SECRET_KEY   |
-| `TOKEN_EXPIRES_IN` | TOKEN_EXPIRES_IN |
+| Key           | Comment     |
+| ------------- | ----------- |
+| `PORT`        | Server port |
+| `HOST`        | Server host |
+| `MONGO_URI`   | Mongo url   |
+| `BCRYPT_SALT` | BCRYPT SALT |
 
 ## Run dev application
 
