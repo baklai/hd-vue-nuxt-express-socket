@@ -38,7 +38,7 @@
 export default {
   data() {
     return {
-      timeout: 60,
+      timeout: 15,
       timerId: null
     };
   },

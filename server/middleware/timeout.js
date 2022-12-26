@@ -1,4 +1,4 @@
-const SOCKET_TIMEOUT = 60;
+const { SOCKET_TIMEOUT } = require('../config');
 
 module.exports = (socket, unless) => {
   return async ([event, ...args], next) => {
