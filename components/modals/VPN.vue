@@ -144,9 +144,9 @@
 
           <v-text-field clearable type="text" v-model.trim="item.mail" :label="$t('Mail number')" />
 
-          <CustomDateOnlyPicker v-model="item.dateOpen" :label="$t('Date open')" />
+          <CustomDatePicker v-model="item.dateOpen" :label="$t('Date open')" />
 
-          <CustomDateOnlyPicker v-model="item.dateClose" :label="$t('Date close')" />
+          <CustomDatePicker v-model="item.dateClose" :label="$t('Date close')" />
 
           <v-text-field
             clearable

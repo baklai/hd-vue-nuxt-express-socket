@@ -16,7 +16,7 @@
               <strong> {{ $t('Date create') }} </strong>
             </v-card-subtitle>
             <v-card-text>
-              <CustomDateOnlyPicker v-model="item.date" :label="$t('Date create IP Address')" />
+              <CustomDatePicker v-model="item.date" :label="$t('Date create IP Address')" />
             </v-card-text>
 
             <v-card-subtitle>
@@ -234,12 +234,12 @@
                 class="icon-small"
               />
 
-              <CustomDateOnlyPicker
+              <CustomDatePicker
                 v-model="item.internet_dateOpen"
                 :label="$t('Date open internet')"
               />
 
-              <CustomDateOnlyPicker
+              <CustomDatePicker
                 v-model="item.internet_dateClose"
                 :label="$t('Date close internet')"
               />
@@ -409,7 +409,7 @@
                       <v-list-item>
                         <v-list-item-content>{{ $t('Open date') }}:</v-list-item-content>
                         <v-list-item-content class="align-end">
-                          <CustomDateOnlyPicker
+                          <CustomDatePicker
                             v-model="editedItem.dateOpen"
                             :label="$t('Date open')"
                             v-if="editedIndex === index"
@@ -421,7 +421,7 @@
                       <v-list-item>
                         <v-list-item-content>{{ $t('Close date') }}:</v-list-item-content>
                         <v-list-item-content class="align-end">
-                          <CustomDateOnlyPicker
+                          <CustomDatePicker
                             v-model="editedItem.dateClose"
                             :label="$t('Date close')"
                             v-if="editedIndex === index"

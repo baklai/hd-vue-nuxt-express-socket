@@ -36,13 +36,19 @@
         <v-form ref="form" lazy-validation @submit.prevent="save()">
           <v-card flat class="my-2">
             <v-card-text>
+              <v-card-subtitle>
+                <strong> {{ $t('Client request') }} </strong>
+              </v-card-subtitle>
               <v-textarea
+                dense
+                outlined
                 :rules="rules.require"
                 v-model="item.request"
                 rows="4"
                 type="text"
                 :label="$t('Client request')"
-                prepend-icon="mdi-text-box-outline"
+                prepend-inner-icon="mdi-text-box-outline"
+                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -50,24 +56,32 @@
               </v-card-subtitle>
 
               <v-text-field
+                dense
+                outlined
                 clearable
                 :rules="rules.require"
                 v-model="item.fullname"
                 type="text"
                 :label="$t('Client name')"
-                prepend-icon="mdi-account-outline"
+                prepend-inner-icon="mdi-account-outline"
+                class="icon-small"
               />
 
               <v-text-field
+                dense
+                outlined
                 clearable
                 :rules="rules.require"
                 v-model="item.phone"
                 type="text"
                 :label="$t('Client phone')"
-                prepend-icon="mdi-phone-outline"
+                prepend-inner-icon="mdi-phone-outline"
+                class="icon-small"
               />
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -75,26 +89,35 @@
                 :rules="rules.require"
                 v-model="item.position"
                 :label="$t('Client position')"
-                prepend-icon="mdi-briefcase-account-outline"
+                prepend-inner-icon="mdi-briefcase-account-outline"
+                class="icon-small"
               />
 
               <v-text-field
+                dense
+                outlined
                 clearable
                 v-model="item.ipaddress"
                 type="text"
                 :label="$t('Client IP Address')"
-                prepend-icon="mdi-ip-network-outline"
+                prepend-inner-icon="mdi-ip-network-outline"
+                class="icon-small"
               />
 
               <v-text-field
+                dense
+                outlined
                 clearable
                 v-model="item.mail"
                 type="text"
                 :label="$t('Client mail number')"
-                prepend-icon="mdi-email-outline"
+                prepend-inner-icon="mdi-email-outline"
+                class="icon-small"
               />
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -102,7 +125,8 @@
                 :rules="rules.require"
                 v-model="item.location"
                 :label="$t('Client location')"
-                prepend-icon="mdi-map-marker-outline"
+                prepend-inner-icon="mdi-map-marker-outline"
+                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -110,6 +134,8 @@
               </v-card-subtitle>
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -117,10 +143,13 @@
                 :rules="rules.require"
                 v-model="item.company"
                 :label="$t('Client company')"
-                prepend-icon="mdi-office-building-outline"
+                prepend-inner-icon="mdi-office-building-outline"
+                class="icon-small"
               />
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -128,10 +157,13 @@
                 :rules="rules.require"
                 v-model="item.branch"
                 :label="$t('Client branch')"
-                prepend-icon=" "
+                prepend-inner-icon=" "
+                class="icon-small"
               />
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -139,10 +171,13 @@
                 :rules="rules.require"
                 v-model="item.enterprise"
                 :label="$t('Client enterprise')"
-                prepend-icon=" "
+                prepend-inner-icon=" "
+                class="icon-small"
               />
 
               <v-autocomplete
+                dense
+                outlined
                 clearable
                 item-text="title"
                 item-value="id"
@@ -150,7 +185,8 @@
                 :rules="rules.require"
                 v-model="item.department"
                 :label="$t('Client department')"
-                prepend-icon=" "
+                prepend-inner-icon=" "
+                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -160,20 +196,26 @@
               <CustomDateTimePicker v-model="item.closed" :label="$t('Date close request')" />
 
               <v-textarea
+                dense
+                outlined
                 clearable
                 v-model="item.conclusion"
-                rows="4"
+                rows="5"
                 type="text"
                 :label="$t('Conclusion for request')"
-                prepend-icon="mdi-text-box-check-outline"
+                prepend-inner-icon="mdi-text-box-check-outline"
+                class="icon-small"
               />
 
               <v-textarea
+                dense
+                outlined
                 v-model="item.comment"
-                rows="2"
+                rows="5"
                 type="text"
                 :label="$t('Comment')"
-                prepend-icon="mdi-comment-text-outline"
+                prepend-inner-icon="mdi-comment-text-outline"
+                class="icon-small"
               />
             </v-card-text>
           </v-card>
@@ -350,3 +392,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.icon-small .v-icon {
+  font-size: 18px !important;
+}
+</style>
