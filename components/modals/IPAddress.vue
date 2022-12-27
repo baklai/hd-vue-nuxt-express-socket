@@ -1,5 +1,5 @@
 <template>
-  <v-dialog persistent scrollable v-model="dialog" width="50%" overlay-color="#525252">
+  <v-dialog persistent scrollable v-model="dialog" width="600" overlay-color="#525252">
     <v-card>
       <v-card-title>
         <v-icon large left> mdi-ip-outline </v-icon>
@@ -11,384 +11,328 @@
       </v-card-title>
       <v-card-text>
         <v-form ref="form" lazy-validation @submit.prevent="save()">
-          <v-row>
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('Date create') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <CustomDateOnlyPicker v-model="item.date" :label="$t('Date create IP Address')" />
-                </v-card-text>
+          <v-card flat class="my-2">
+            <v-card-subtitle>
+              <strong> {{ $t('Date create') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <CustomDateOnlyPicker v-model="item.date" :label="$t('Date create IP Address')" />
+            </v-card-text>
 
-                <v-card-subtitle>
-                  <strong> {{ $t('Location') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="locations"
-                    :rules="rules.require"
-                    v-model="item.location"
-                    :label="$t('Client location')"
-                    prepend-icon="mdi-map-marker-outline"
-                  />
-                </v-card-text>
+            <v-card-subtitle>
+              <strong> {{ $t('Mail number') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                v-model="item.mail"
+                type="text"
+                :label="$t('Client mail number')"
+                prepend-inner-icon="mdi-email-outline"
+                class="icon-small"
+              />
+            </v-card-text>
 
-                <v-card-subtitle>
-                  <strong> {{ $t('Unit') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="units"
-                    :rules="rules.require"
-                    v-model="item.unit"
-                    :label="$t('Client unit')"
-                    prepend-icon="mdi-expansion-card-variant"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
+            <v-card-subtitle>
+              <strong> {{ $t('IP Address') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                :rules="rules.ipv4"
+                v-model="item.ipaddress"
+                type="text"
+                :label="$t('Client IP Address')"
+                prepend-inner-icon="mdi-ip-outline"
+                class="icon-small"
+              />
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                return-object
+                :items="cidrs"
+                :rules="rules.require"
+                v-model="item.cidr"
+                :item-text="(item) => `${item.mask} / ${item.value}`"
+                :label="$t('Mask IP Address')"
+                prepend-inner-icon=" "
+                class="icon-small"
+              />
+            </v-card-text>
 
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('IP Address') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-text-field
-                    clearable
-                    :rules="rules.ipv4"
-                    v-model="item.ipaddress"
-                    type="text"
-                    :label="$t('Client IP Address')"
-                    prepend-icon="mdi-ip-outline"
-                  />
-                  <v-autocomplete
-                    clearable
-                    return-object
-                    :items="cidrs"
-                    :rules="rules.require"
-                    v-model="item.cidr"
-                    :item-text="(item) => `${item.mask} / ${item.value}`"
-                    :label="$t('Mask IP Address')"
-                    prepend-icon=" "
-                  />
-                </v-card-text>
+            <v-card-subtitle>
+              <strong> {{ $t('Unit') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="units"
+                :rules="rules.require"
+                v-model="item.unit"
+                :label="$t('Client unit')"
+                prepend-inner-icon="mdi-expansion-card-variant"
+                class="icon-small"
+              />
+            </v-card-text>
 
-                <v-card-subtitle>
-                  <strong> {{ $t('Autoanswer') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-text-field
-                    clearable
-                    v-model="item.autoanswer"
-                    type="text"
-                    :label="$t('Client autoanswer')"
-                    prepend-icon="mdi-swap-horizontal"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
+            <v-card-subtitle>
+              <strong> {{ $t('Location') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="locations"
+                :rules="rules.require"
+                v-model="item.location"
+                :label="$t('Client location')"
+                prepend-inner-icon="mdi-map-marker-outline"
+                class="icon-small"
+              />
+            </v-card-text>
 
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('Company') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="companies"
-                    :rules="rules.require"
-                    v-model="item.company"
-                    :label="$t('Client company')"
-                    prepend-icon="mdi-office-building-outline"
-                  />
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="branches"
-                    :rules="rules.require"
-                    v-model="item.branch"
-                    :label="$t('Client branch')"
-                    prepend-icon=" "
-                  />
+            <v-card-subtitle>
+              <strong> {{ $t('Company') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="companies"
+                :rules="rules.require"
+                v-model="item.company"
+                :label="$t('Client company')"
+                prepend-inner-icon="mdi-office-building-outline"
+                class="icon-small"
+              />
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="branches"
+                :rules="rules.require"
+                v-model="item.branch"
+                :label="$t('Client branch')"
+                prepend-inner-icon=" "
+                class="icon-small"
+              />
 
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="enterprises"
-                    :rules="rules.require"
-                    v-model="item.enterprise"
-                    :label="$t('Client enterprise')"
-                    prepend-icon=" "
-                  />
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="enterprises"
+                :rules="rules.require"
+                v-model="item.enterprise"
+                :label="$t('Client enterprise')"
+                prepend-inner-icon=" "
+                class="icon-small"
+              />
 
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="departments"
-                    :rules="rules.require"
-                    v-model="item.department"
-                    :label="$t('Client department')"
-                    prepend-icon=" "
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="departments"
+                :rules="rules.require"
+                v-model="item.department"
+                :label="$t('Client department')"
+                prepend-inner-icon=" "
+                class="icon-small"
+              />
+            </v-card-text>
 
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('Client info') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-text-field
-                    clearable
-                    v-model="item.fullname"
-                    type="text"
-                    :label="$t('Client fullname')"
-                    prepend-icon="mdi-account-circle-outline"
-                  />
-                  <v-autocomplete
-                    clearable
-                    item-text="title"
-                    item-value="id"
-                    :items="positions"
-                    :rules="rules.require"
-                    v-model="item.position"
-                    :label="$t('Client position')"
-                    prepend-icon="mdi-briefcase-account-outline"
-                  />
+            <v-card-subtitle>
+              <strong> {{ $t('Client info') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                v-model="item.fullname"
+                type="text"
+                :label="$t('Client fullname')"
+                prepend-inner-icon="mdi-account-circle-outline"
+                class="icon-small"
+              />
+              <v-autocomplete
+                dense
+                outlined
+                clearable
+                item-text="title"
+                item-value="id"
+                :items="positions"
+                :rules="rules.require"
+                v-model="item.position"
+                :label="$t('Client position')"
+                prepend-inner-icon="mdi-briefcase-account-outline"
+                class="icon-small"
+              />
 
-                  <v-text-field
-                    clearable
-                    v-model="item.phone"
-                    type="text"
-                    :label="$t('Client phone')"
-                    prepend-icon="mdi-phone-outline"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                v-model="item.phone"
+                type="text"
+                :label="$t('Client phone')"
+                prepend-inner-icon="mdi-phone-outline"
+                class="icon-small"
+              />
+            </v-card-text>
 
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('Mail number') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-text-field
-                    clearable
-                    v-model="item.mail"
-                    type="text"
-                    :label="$t('Client mail number')"
-                    prepend-icon="mdi-email-outline"
-                  />
-                </v-card-text>
+            <v-card-subtitle>
+              <strong> {{ $t('Autoanswer') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                v-model="item.autoanswer"
+                type="text"
+                :label="$t('Client autoanswer')"
+                prepend-inner-icon="mdi-swap-horizontal"
+                class="icon-small"
+              />
+            </v-card-text>
 
-                <v-card-subtitle>
-                  <strong> {{ $t('Comment') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-textarea
-                    clearable
-                    rows="2"
-                    type="text"
-                    v-model="item.comment"
-                    :label="$t('Comment')"
-                    prepend-inner-icon="mdi-text-box-outline"
-                  />
-                </v-card-text>
-              </v-card>
-            </v-col>
+            <v-card-subtitle>
+              <strong> {{ $t('Internet') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-text-field
+                dense
+                outlined
+                clearable
+                v-model="item.internet_mail"
+                type="text"
+                :label="$t('Internet mail number')"
+                prepend-inner-icon="mdi-email-outline"
+                class="icon-small"
+              />
 
-            <v-col cols="6">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('Internet') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-card-text>
-                    <v-text-field
-                      clearable
-                      v-model="item.internet_mail"
-                      type="text"
-                      :label="$t('Internet mail number')"
-                      prepend-icon="mdi-email-outline"
-                    />
-                  </v-card-text>
+              <CustomDateOnlyPicker
+                v-model="item.internet_dateOpen"
+                :label="$t('Date open internet')"
+              />
 
-                  <v-card-subtitle>
-                    <strong> {{ $t('Date open internet') }} </strong>
-                  </v-card-subtitle>
-                  <v-card-text>
-                    <CustomDateOnlyPicker
-                      v-model="item.internet_dateOpen"
-                      :label="$t('Date open internet')"
-                    />
-                  </v-card-text>
+              <CustomDateOnlyPicker
+                v-model="item.internet_dateClose"
+                :label="$t('Date close internet')"
+              />
 
-                  <v-card-subtitle>
-                    <strong> {{ $t('Date close internet') }} </strong>
-                  </v-card-subtitle>
-                  <v-card-text>
-                    <CustomDateOnlyPicker
-                      v-model="item.internet_dateClose"
-                      :label="$t('Date close internet')"
-                    />
-                  </v-card-text>
+              <v-textarea
+                dense
+                outlined
+                clearable
+                rows="1"
+                type="text"
+                v-model="item.internet_comment"
+                :label="$t('Comment')"
+                prepend-inner-icon="mdi-text-box-outline"
+                class="icon-small"
+              />
+            </v-card-text>
 
-                  <v-card-text>
-                    <v-textarea
-                      clearable
-                      rows="2"
-                      type="text"
-                      v-model="item.internet_comment"
-                      :label="$t('Comment')"
-                      prepend-inner-icon="mdi-text-box-outline"
-                    />
-                  </v-card-text>
-                </v-card-text>
-              </v-card>
-            </v-col>
+            <v-card-subtitle>
+              <strong> {{ $t('Comment') }} </strong>
+            </v-card-subtitle>
+            <v-card-text>
+              <v-textarea
+                dense
+                outlined
+                clearable
+                rows="5"
+                type="text"
+                v-model="item.comment"
+                :label="$t('Comment')"
+                prepend-inner-icon="mdi-text-box-outline"
+                class="icon-small"
+              />
+            </v-card-text>
 
-            <v-col cols="12">
-              <v-card flat class="my-2">
-                <v-card-subtitle>
-                  <strong> {{ $t('E-mails') }} </strong>
-                </v-card-subtitle>
-                <v-card-text>
-                  <v-data-table
-                    dense
-                    fixed-header
-                    sort-by="login"
-                    :search="search"
-                    :headers="headers"
-                    :items="item.email"
+            <v-card-text>
+              <v-data-iterator :items="item.email" hide-default-footer>
+                <template v-slot:header>
+                  <v-card-title class="pa-0">
+                    <v-card-subtitle class="px-0">
+                      <strong> {{ $t('E-mails') }} </strong>
+                    </v-card-subtitle>
+                    <v-spacer />
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-on="on" v-bind="attrs" @click="addItem()">
+                          <v-icon> mdi-plus-circle-outline </v-icon>
+                        </v-btn>
+                      </template>
+                      <span> {{ $t('Create new record') }} </span>
+                    </v-tooltip>
+                  </v-card-title>
+                </template>
+
+                <template v-slot:default="{ items, isExpanded, expand }">
+                  <v-card
+                    flat
+                    outlined
+                    v-for="(item, index) in items"
+                    :key="item.login"
+                    class="mb-2"
                   >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-spacer />
-                        <v-responsive max-width="240" class="mr-2">
-                          <v-text-field
-                            flat
-                            clearable
-                            single-line
-                            hide-details
-                            v-model="search"
-                            prepend-inner-icon="mdi-magnify"
-                            :label="$t('Search in table')"
-                            class="ma-0"
-                          />
-                        </v-responsive>
-                        <v-tooltip bottom>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-btn icon v-on="on" v-bind="attrs" class="mx-2" @click="addItem()">
-                              <v-icon> mdi-plus-circle-outline </v-icon>
-                            </v-btn>
-                          </template>
-                          <span> {{ $t('Create new record') }} </span>
-                        </v-tooltip>
-                      </v-toolbar>
-                    </template>
-
-                    <template v-slot:[`item.login`]="{ item, index }">
-                      <v-text-field
-                        dense
-                        autofocus
-                        single-line
-                        hide-details
-                        v-model="editedItem.login"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.login }} </span>
-                    </template>
-
-                    <template v-slot:[`item.mail`]="{ item, index }">
-                      <v-text-field
-                        dense
-                        single-line
-                        hide-details
-                        v-model="editedItem.mail"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.mail }} </span>
-                    </template>
-
-                    <template v-slot:[`item.dateOpen`]="{ item, index }">
-                      <CustomDateOnlyPicker
-                        v-model="editedItem.dateOpen"
-                        :label="$t('Date open')"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.dateOpen }} </span>
-                    </template>
-
-                    <template v-slot:[`item.dateClose`]="{ item, index }">
-                      <CustomDateOnlyPicker
-                        v-model="editedItem.dateClose"
-                        :label="$t('Date close')"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.dateClose }} </span>
-                    </template>
-
-                    <template v-slot:[`item.comment`]="{ item, index }">
-                      <v-text-field
-                        dense
-                        single-line
-                        hide-details
-                        v-model="editedItem.comment"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.comment }} </span>
-                    </template>
-
-                    <template v-slot:[`item.fullname`]="{ item, index }">
-                      <v-text-field
-                        dense
-                        single-line
-                        hide-details
-                        v-model="editedItem.fullname"
-                        v-if="editedIndex === index"
-                      />
-                      <span v-else> {{ item.fullname }} </span>
-                    </template>
-
-                    <template v-slot:[`item.actions`]="{ item, index }">
+                    <v-card-title class="pa-0">
+                      <v-btn
+                        icon
+                        small
+                        @click="(v) => expand(item, !isExpanded(item))"
+                        class="mr-4"
+                      >
+                        <v-icon>
+                          {{
+                            isExpanded(item)
+                              ? 'mdi-chevron-down-circle-outline'
+                              : 'mdi-chevron-up-circle-outline'
+                          }}
+                        </v-icon>
+                      </v-btn>
+                      {{ item.login }}
+                      <v-spacer />
                       <div v-if="editedIndex === index">
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                              small
-                              v-on="on"
-                              v-bind="attrs"
-                              class="mx-2"
-                              @click="closeItem()"
-                            >
-                              mdi-window-close
-                            </v-icon>
+                            <v-btn icon small v-on="on" v-bind="attrs" @click="closeItem()">
+                              <v-icon small> mdi-window-close </v-icon>
+                            </v-btn>
                           </template>
                           <span> {{ $t('Close record') }} </span>
                         </v-tooltip>
 
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
-                            <v-icon small v-on="on" v-bind="attrs" class="mx-2" @click="saveItem()">
-                              mdi-content-save
-                            </v-icon>
+                            <v-btn icon small v-on="on" v-bind="attrs" @click="saveItem()">
+                              <v-icon small> mdi-content-save </v-icon>
+                            </v-btn>
                           </template>
                           <span> {{ $t('Save record') }} </span>
                         </v-tooltip>
@@ -396,40 +340,116 @@
                       <div v-else>
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                              small
-                              v-on="on"
-                              v-bind="attrs"
-                              class="mx-2"
-                              @click="editItem(item)"
-                            >
-                              mdi-pencil
-                            </v-icon>
+                            <v-btn icon small v-on="on" v-bind="attrs" @click="editItem(item)">
+                              <v-icon small> mdi-pencil </v-icon>
+                            </v-btn>
                           </template>
                           <span> {{ $t('Edit record') }} </span>
                         </v-tooltip>
 
                         <v-tooltip bottom>
                           <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                              small
-                              v-on="on"
-                              v-bind="attrs"
-                              class="mx-2"
-                              @click="deleteItem(item)"
-                            >
-                              mdi-delete
-                            </v-icon>
+                            <v-btn icon small v-on="on" v-bind="attrs" @click="deleteItem(item)">
+                              <v-icon small> mdi-delete </v-icon>
+                            </v-btn>
                           </template>
                           <span> {{ $t('Delete record') }} </span>
                         </v-tooltip>
                       </div>
-                    </template>
-                  </v-data-table>
-                </v-card-text>
-              </v-card>
-            </v-col>
-          </v-row>
+                    </v-card-title>
+                    <v-divider v-if="isExpanded(item)" />
+                    <v-list dense v-if="isExpanded(item)">
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Login') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <v-text-field
+                            dense
+                            outlined
+                            single-line
+                            hide-details
+                            v-model="editedItem.login"
+                            v-if="editedIndex === index"
+                            class="block"
+                            style="width: 200px"
+                          />
+                          <span v-else>{{ item.login }}</span>
+                        </v-list-item-content>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Mail number') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <v-text-field
+                            dense
+                            outlined
+                            single-line
+                            hide-details
+                            v-model="editedItem.mail"
+                            v-if="editedIndex === index"
+                          />
+                          <span v-else> {{ item.mail }} </span>
+                        </v-list-item-content>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Fullname') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <v-text-field
+                            dense
+                            outlined
+                            single-line
+                            hide-details
+                            v-model="editedItem.fullname"
+                            v-if="editedIndex === index"
+                          />
+                          <span v-else> {{ item.fullname }} </span>
+                        </v-list-item-content>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Open date') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <CustomDateOnlyPicker
+                            v-model="editedItem.dateOpen"
+                            :label="$t('Date open')"
+                            v-if="editedIndex === index"
+                          />
+                          <span v-else> {{ item.dateOpen }} </span>
+                        </v-list-item-content>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Close date') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <CustomDateOnlyPicker
+                            v-model="editedItem.dateClose"
+                            :label="$t('Date close')"
+                            v-if="editedIndex === index"
+                          />
+                          <span v-else> {{ item.dateClose }} </span>
+                        </v-list-item-content>
+                      </v-list-item>
+
+                      <v-list-item>
+                        <v-list-item-content>{{ $t('Comment') }}:</v-list-item-content>
+                        <v-list-item-content class="align-end">
+                          <v-text-field
+                            dense
+                            outlined
+                            single-line
+                            hide-details
+                            v-model="editedItem.comment"
+                            v-if="editedIndex === index"
+                          />
+                          <span v-else> {{ item.comment }} </span>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </v-card>
+                </template>
+              </v-data-iterator>
+            </v-card-text>
+          </v-card>
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -518,10 +538,10 @@ export default {
 
       rules: {
         require: [(v) => !!v || this.$t('Field is required')],
-        ipv4: [(v) => (!!v && v === null) || this.IPv4.test(v) || 'Examples: 127.0.0.1 (single)']
+        ipv4: [
+          (v) => (!!v && v === null) || this.IPv4.test(v) || this.$t('Examples: 127.0.0.1 (single)')
+        ]
       },
-
-      search: '',
 
       editedIndex: -1,
       editedItem: {
@@ -546,49 +566,6 @@ export default {
   computed: {
     IPv4() {
       return this.$store.state.regex.IPv4;
-    },
-
-    headers() {
-      return [
-        {
-          text: this.$t('Login'),
-          value: 'login',
-          sortable: false
-        },
-        {
-          text: this.$t('Mail number'),
-          value: 'mail',
-          sortable: false
-        },
-        {
-          text: this.$t('Open date'),
-          value: 'dateOpen',
-          sortable: false
-        },
-        {
-          text: this.$t('Close date'),
-          value: 'dateClose',
-          sortable: false
-        },
-        {
-          text: this.$t('Comment'),
-          value: 'comment',
-          sortable: false
-        },
-        {
-          text: this.$t('Fullname'),
-          value: 'fullname',
-          sortable: false
-        },
-        {
-          text: this.$t('Actions'),
-          value: 'actions',
-          align: 'center',
-          width: '100px',
-          sortable: false,
-          filterable: false
-        }
-      ];
     }
   },
 
@@ -751,3 +728,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.icon-small .v-icon {
+  font-size: 18px !important;
+}
+</style>

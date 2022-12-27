@@ -2,13 +2,16 @@
   <v-dialog v-model="display" :width="340">
     <template v-slot:activator="{ on }">
       <v-text-field
+        dense
+        readonly
+        outlined
         clearable
         v-bind="textFieldProps"
         :disabled="disabled"
         :label="label"
         :value="formattedDatetime"
         v-on="on"
-        readonly
+        class="icon-small"
       >
       </v-text-field>
     </template>
@@ -40,13 +43,13 @@
           </v-tab-item>
           <v-tab-item key="timer">
             <v-time-picker
+              no-title
+              full-width
+              landscape
               ref="timer"
               v-model="time"
               v-bind="timePickerProps"
-              full-width
               format="24hr"
-              landscape
-              no-title
             />
           </v-tab-item>
         </v-tabs>

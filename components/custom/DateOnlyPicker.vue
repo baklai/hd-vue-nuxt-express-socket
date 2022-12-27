@@ -10,12 +10,15 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
+        dense
+        outlined
         clearable
         v-on="on"
         v-bind="attrs"
         v-model="model"
         :label="label"
-        prepend-icon="mdi-calendar"
+        prepend-inner-icon="mdi-calendar"
+        class="icon-small"
       />
     </template>
     <v-date-picker v-model="model" no-title scrollable :locale="$i18n.locale">
