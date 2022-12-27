@@ -32,29 +32,34 @@
       <v-card-text>
         <v-form ref="form" class="px-2" lazy-validation @submit.prevent="onSave()">
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             :rules="rules.require"
             v-model.trim="item.vpn"
             :label="$t('VPN Address')"
           />
 
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             v-model.trim="item.ipaddress"
             :label="$t('IP Address')"
           />
 
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             :rules="rules.require"
             v-model.trim="item.login"
             :label="$t('VPN Login')"
           />
 
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -62,10 +67,12 @@
             :rules="rules.require"
             v-model="item.unit"
             :label="$t('Client unit')"
-            prepend-icon="mdi-expansion-card-variant"
+            prepend-inner-icon="mdi-expansion-card-variant"
           />
 
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -73,9 +80,11 @@
             :rules="rules.require"
             v-model="item.position"
             :label="$t('Client position')"
-            prepend-icon="mdi-briefcase-account-outline"
+            prepend-inner-icon="mdi-briefcase-account-outline"
           />
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -83,9 +92,11 @@
             :rules="rules.require"
             v-model="item.location"
             :label="$t('Client location')"
-            prepend-icon="mdi-map-marker-outline"
+            prepend-inner-icon="mdi-map-marker-outline"
           />
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -93,9 +104,11 @@
             :rules="rules.require"
             v-model="item.company"
             :label="$t('Client company')"
-            prepend-icon="mdi-office-building-outline"
+            prepend-inner-icon="mdi-office-building-outline"
           />
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -103,10 +116,12 @@
             :rules="rules.require"
             v-model="item.branch"
             :label="$t('Client branch')"
-            prepend-icon=" "
+            prepend-inner-icon=" "
           />
 
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -114,10 +129,12 @@
             :rules="rules.require"
             v-model="item.enterprise"
             :label="$t('Client enterprise')"
-            prepend-icon=" "
+            prepend-inner-icon=" "
           />
 
           <v-autocomplete
+            dense
+            outlined
             clearable
             item-text="title"
             item-value="id"
@@ -125,40 +142,51 @@
             :rules="rules.require"
             v-model="item.department"
             :label="$t('Client department')"
-            prepend-icon=" "
+            prepend-inner-icon=" "
           />
 
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             v-model.trim="item.fullname"
             :label="$t('Client fullname')"
           />
 
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             v-model.trim="item.phone"
             :label="$t('Client phone')"
           />
 
-          <v-text-field clearable type="text" v-model.trim="item.mail" :label="$t('Mail number')" />
+          <v-text-field
+            dense
+            outlined
+            clearable
+            type="text"
+            v-model.trim="item.mail"
+            :label="$t('Mail number')"
+          />
 
           <CustomDatePicker v-model="item.dateOpen" :label="$t('Date open')" />
 
           <CustomDatePicker v-model="item.dateClose" :label="$t('Date close')" />
 
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             v-model.trim="item.service"
             :label="$t('VPN Service')"
           />
 
           <v-textarea
-            rows="2"
-            type="text"
+            dense
+            outlined
             clearable
+            rows="3"
             v-model.trim="item.comment"
             :label="$t('Comment')"
           />

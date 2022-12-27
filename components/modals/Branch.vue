@@ -86,6 +86,8 @@
       <v-card-text>
         <v-form ref="form" class="px-2" lazy-validation @submit.prevent="onSave()">
           <v-text-field
+            dense
+            outlined
             clearable
             type="text"
             :rules="rules.require"
@@ -93,13 +95,17 @@
             :label="$t('Branch name')"
           />
           <v-text-field
+            dense
+            outlined
             clearable
             type="text"
             v-model.trim="item.address"
             :label="$t('Branch address')"
           />
           <v-textarea
-            rows="2"
+            dense
+            outlined
+            rows="3"
             type="text"
             clearable
             v-model.trim="item.comment"

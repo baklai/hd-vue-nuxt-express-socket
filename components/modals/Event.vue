@@ -31,8 +31,9 @@
       <v-card-text>
         <v-form ref="form" class="px-2" lazy-validation @submit.prevent="onSave()">
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             :rules="rules.require"
             v-model.trim="item.name"
             :label="$t('Title event')"
@@ -42,10 +43,17 @@
             :rules="rules.require"
             :label="$t('Date of event')"
           />
-          <v-text-field clearable type="text" v-model.trim="item.href" :label="$t('Event url')" />
+          <v-text-field
+            dense
+            outlined
+            clearable
+            v-model.trim="item.href"
+            :label="$t('Event url')"
+          />
           <v-textarea
-            rows="2"
-            type="text"
+            rows="3"
+            dense
+            outlined
             clearable
             v-model.trim="item.comment"
             :label="$t('Comment')"

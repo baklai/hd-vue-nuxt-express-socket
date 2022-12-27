@@ -85,8 +85,9 @@
       <v-card-text>
         <v-form ref="form" class="px-2" lazy-validation @submit.prevent="onSave()">
           <v-text-field
+            dense
+            outlined
             clearable
-            type="text"
             :rules="rules.require"
             v-model.trim="item.title"
             :label="$t('Unit name')"

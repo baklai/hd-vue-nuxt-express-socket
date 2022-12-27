@@ -34,43 +34,50 @@
               <v-card flat class="mx-auto">
                 <v-card-text>
                   <v-text-field
+                    dense
+                    outlined
                     clearable
-                    type="text"
                     :label="$t('User login')"
                     :rules="rules.require"
                     v-model.trim="user.login"
-                    prepend-icon="mdi-account-outline"
+                    prepend-inner-icon="mdi-account-outline"
                   />
 
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     type="email"
                     :label="$t('User email')"
                     v-model.trim="user.email"
-                    prepend-icon="mdi-email-outline"
+                    prepend-inner-icon="mdi-email-outline"
                   />
 
                   <v-text-field
+                    dense
+                    outlined
                     clearable
-                    type="text"
                     :label="$t('User phone')"
                     v-model.trim="user.phone"
-                    prepend-icon="mdi-phone-outline"
+                    prepend-inner-icon="mdi-phone-outline"
                   />
 
                   <v-text-field
+                    dense
+                    outlined
                     clearable
-                    type="text"
                     :label="$t('User name')"
                     :rules="rules.require"
                     v-model.trim="user.name"
-                    prepend-icon="mdi-account-circle-outline"
+                    prepend-inner-icon="mdi-account-circle-outline"
                   />
 
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     :label="$t('User password')"
-                    prepend-icon="mdi-lock-outline"
+                    prepend-inner-icon="mdi-lock-outline"
                     :type="eyepass ? 'text' : 'password'"
                     :rules="!IDItem ? rules.password : []"
                     v-model.trim="user.password"

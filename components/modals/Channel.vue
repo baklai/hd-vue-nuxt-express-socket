@@ -34,18 +34,20 @@
               <v-card flat class="my-2">
                 <v-card-text>
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     v-model="item.locationFrom"
-                    type="text"
                     :label="$t('Location start')"
-                    prepend-icon="mdi-office-building-marker-outline"
+                    prepend-inner-icon="mdi-office-building-marker-outline"
                   />
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     v-model="item.unitFrom"
-                    type="text"
                     :label="$t('Unit start')"
-                    prepend-icon="mdi-expansion-card-variant"
+                    prepend-inner-icon="mdi-expansion-card-variant"
                   />
                 </v-card-text>
               </v-card>
@@ -55,18 +57,20 @@
               <v-card flat class="my-2">
                 <v-card-text>
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     v-model="item.locationTo"
-                    type="text"
                     :label="$t('Location end')"
-                    prepend-icon="mdi-office-building-marker-outline"
+                    prepend-inner-icon="mdi-office-building-marker-outline"
                   />
                   <v-text-field
+                    dense
+                    outlined
                     clearable
                     v-model="item.unitTo"
-                    type="text"
                     :label="$t('Unit end')"
-                    prepend-icon="mdi-expansion-card-variant"
+                    prepend-inner-icon="mdi-expansion-card-variant"
                   />
                 </v-card-text>
               </v-card>
@@ -77,51 +81,51 @@
                 <v-card flat class="my-2">
                   <v-card-text>
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.level"
-                      type="text"
                       :label="$t('Level')"
-                      prepend-icon=""
                     />
 
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.type"
-                      type="text"
                       :label="$t('Type')"
-                      prepend-icon=""
                     />
 
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.speed"
-                      type="text"
                       :label="$t('Speed')"
-                      prepend-icon=""
                     />
 
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.status"
-                      type="text"
                       :label="$t('Status')"
-                      prepend-icon=""
                     />
 
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.operator"
-                      type="text"
                       :label="$t('Operator')"
-                      prepend-icon=""
                     />
 
                     <v-text-field
+                      dense
+                      outlined
                       clearable
                       v-model="item.composition"
-                      type="text"
                       :label="$t('Composition')"
-                      prepend-icon=""
                     />
                   </v-card-text>
                 </v-card>
