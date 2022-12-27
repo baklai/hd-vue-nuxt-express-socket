@@ -211,7 +211,7 @@
                 dense
                 outlined
                 v-model="item.comment"
-                rows="5"
+                rows="3"
                 type="text"
                 :label="$t('Comment')"
                 prepend-inner-icon="mdi-comment-text-outline"
