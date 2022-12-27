@@ -37,6 +37,7 @@
             :rules="rules.require"
             v-model.trim="item.name"
             :label="$t('Title event')"
+            prepend-inner-icon="mdi-format-title"
           />
           <CustomDateTimePicker
             v-model="item.date"

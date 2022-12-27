@@ -20,23 +20,23 @@
                 <v-col cols="12">
                   <v-text-field
                     dense
+                    outlined
                     clearable
-                    type="text"
                     label="Title"
                     :rules="rules.require"
                     v-model.trim="title"
-                    prepend-icon="mdi-format-title"
+                    prepend-inner-icon="mdi-format-title"
                   />
                 </v-col>
                 <v-col cols="12">
                   <v-textarea
                     dense
+                    outlined
                     clearable
-                    rows="3"
-                    label="Text"
+                    rows="5"
                     :rules="rules.require"
                     v-model.trim="text"
-                    prepend-icon="mdi-comment-text-outline"
+                    prepend-inner-icon="mdi-comment-text-outline"
                   />
                 </v-col>
                 <v-col cols="12">
@@ -45,6 +45,7 @@
                     dense
                     chips
                     multiple
+                    outlined
                     clearable
                     small-chips
                     hide-selected
@@ -55,7 +56,7 @@
                     :items="users"
                     item-value="id"
                     item-text="name"
-                    prepend-icon="mdi-account-multiple-check-outline"
+                    prepend-inner-icon="mdi-account-multiple-check-outline"
                     :label="$t('List of user accounts')"
                     :hint="$t('Specify users to create a notification')"
                   >

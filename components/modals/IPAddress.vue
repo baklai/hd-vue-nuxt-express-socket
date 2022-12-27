@@ -1,14 +1,37 @@
 <template>
   <v-dialog persistent scrollable v-model="dialog" width="600" overlay-color="#525252">
     <v-card>
-      <v-card-title>
-        <v-icon large left> mdi-ip-outline </v-icon>
-        <span class="text-h5"> {{ title }} </span>
+      <v-card-title class="pt-0">
+        <v-list flat>
+          <v-list-item two-line class="pa-0">
+            <v-list-item-avatar tile>
+              <v-icon x-large> mdi-ip-outline </v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ title }}
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ status }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                {{ subtitle }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
         <v-spacer />
-        <v-btn icon @click="close()">
-          <v-icon> mdi-close </v-icon>
-        </v-btn>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn icon v-on="on" v-bind="attrs" @click="close()">
+              <v-icon> mdi-close </v-icon>
+            </v-btn>
+          </template>
+          <span> {{ $t('Close') }} </span>
+        </v-tooltip>
       </v-card-title>
+
       <v-card-text>
         <v-form ref="form" lazy-validation @submit.prevent="save()">
           <v-card flat class="my-2">
@@ -450,8 +473,8 @@ export default {
   data() {
     return {
       dialog: false,
+      status: false,
       IDItem: null,
-      title: null,
 
       locations: [],
       units: [],
@@ -548,8 +571,24 @@ export default {
   },
 
   computed: {
+    title() {
+      return this.$t('IP Address');
+    },
+    subtitle() {
+      return this.$t('IP Address from database');
+    },
+
     IPv4() {
       return this.$store.state.regex.IPv4;
+    }
+  },
+
+  watch: {
+    IDItem: {
+      handler: function (value) {
+        this.status = value ? this.$t('Edit current record') : this.$t('Create new record');
+      },
+      deep: true
     }
   },
 
@@ -558,7 +597,7 @@ export default {
       this.editedIndex = -1;
       this.IDItem = id;
       try {
-        this.title = this.IDItem ? this.$t('Edit current record') : this.$t('Create new record');
+        this.status = this.IDItem ? this.$t('Edit current record') : this.$t('Create new record');
 
         this.locations = await this.$store.dispatch('api/location/findAll');
         this.units = await this.$store.dispatch('api/unit/findAll');
