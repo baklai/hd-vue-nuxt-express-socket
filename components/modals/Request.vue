@@ -48,7 +48,6 @@
                 type="text"
                 :label="$t('Client request')"
                 prepend-inner-icon="mdi-text-box-outline"
-                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -64,7 +63,6 @@
                 type="text"
                 :label="$t('Client name')"
                 prepend-inner-icon="mdi-account-outline"
-                class="icon-small"
               />
 
               <v-text-field
@@ -76,7 +74,6 @@
                 type="text"
                 :label="$t('Client phone')"
                 prepend-inner-icon="mdi-phone-outline"
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -90,7 +87,6 @@
                 v-model="item.position"
                 :label="$t('Client position')"
                 prepend-inner-icon="mdi-briefcase-account-outline"
-                class="icon-small"
               />
 
               <v-text-field
@@ -101,7 +97,6 @@
                 type="text"
                 :label="$t('Client IP Address')"
                 prepend-inner-icon="mdi-ip-network-outline"
-                class="icon-small"
               />
 
               <v-text-field
@@ -112,7 +107,6 @@
                 type="text"
                 :label="$t('Client mail number')"
                 prepend-inner-icon="mdi-email-outline"
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -126,7 +120,6 @@
                 v-model="item.location"
                 :label="$t('Client location')"
                 prepend-inner-icon="mdi-map-marker-outline"
-                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -144,7 +137,6 @@
                 v-model="item.company"
                 :label="$t('Client company')"
                 prepend-inner-icon="mdi-office-building-outline"
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -158,7 +150,6 @@
                 v-model="item.branch"
                 :label="$t('Client branch')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -172,7 +163,6 @@
                 v-model="item.enterprise"
                 :label="$t('Client enterprise')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -186,7 +176,6 @@
                 v-model="item.department"
                 :label="$t('Client department')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
 
               <v-card-subtitle>
@@ -204,7 +193,6 @@
                 type="text"
                 :label="$t('Conclusion for request')"
                 prepend-inner-icon="mdi-text-box-check-outline"
-                class="icon-small"
               />
 
               <v-textarea
@@ -215,7 +203,6 @@
                 type="text"
                 :label="$t('Comment')"
                 prepend-inner-icon="mdi-comment-text-outline"
-                class="icon-small"
               />
             </v-card-text>
           </v-card>

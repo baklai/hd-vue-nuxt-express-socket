@@ -18,7 +18,6 @@
         v-model="model"
         :label="label"
         prepend-inner-icon="mdi-calendar"
-        class="icon-small"
       />
     </template>
     <v-date-picker v-model="model" no-title scrollable :locale="$i18n.locale">

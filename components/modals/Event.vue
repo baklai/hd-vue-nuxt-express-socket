@@ -49,6 +49,7 @@
             clearable
             v-model.trim="item.href"
             :label="$t('Event url')"
+            prepend-inner-icon="mdi-search-web"
           />
           <v-textarea
             rows="3"
@@ -57,6 +58,7 @@
             clearable
             v-model.trim="item.comment"
             :label="$t('Comment')"
+            prepend-inner-icon="mdi-comment-text-outline"
           />
         </v-form>
       </v-card-text>

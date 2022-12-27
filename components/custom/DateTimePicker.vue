@@ -12,7 +12,6 @@
         :value="formattedDatetime"
         v-on="on"
         prepend-inner-icon="mdi-calendar"
-        class="icon-small"
       >
       </v-text-field>
     </template>

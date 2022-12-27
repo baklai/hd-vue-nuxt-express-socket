@@ -53,6 +53,10 @@ div[data-app='true'] {
   width: 36px !important;
 }
 
+.v-input__icon .v-icon {
+  font-size: 1.2em !important;
+}
+
 .toasted {
   border-radius: 3px !important;
 }

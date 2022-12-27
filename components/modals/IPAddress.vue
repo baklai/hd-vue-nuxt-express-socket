@@ -31,7 +31,6 @@
                 type="text"
                 :label="$t('Client mail number')"
                 prepend-inner-icon="mdi-email-outline"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -48,7 +47,6 @@
                 type="text"
                 :label="$t('Client IP Address')"
                 prepend-inner-icon="mdi-ip-outline"
-                class="icon-small"
               />
               <v-autocomplete
                 dense
@@ -61,7 +59,6 @@
                 :item-text="(item) => `${item.mask} / ${item.value}`"
                 :label="$t('Mask IP Address')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
             </v-card-text>
 
@@ -80,7 +77,6 @@
                 v-model="item.unit"
                 :label="$t('Client unit')"
                 prepend-inner-icon="mdi-expansion-card-variant"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -99,7 +95,6 @@
                 v-model="item.location"
                 :label="$t('Client location')"
                 prepend-inner-icon="mdi-map-marker-outline"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -118,7 +113,6 @@
                 v-model="item.company"
                 :label="$t('Client company')"
                 prepend-inner-icon="mdi-office-building-outline"
-                class="icon-small"
               />
               <v-autocomplete
                 dense
@@ -131,7 +125,6 @@
                 v-model="item.branch"
                 :label="$t('Client branch')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -145,7 +138,6 @@
                 v-model="item.enterprise"
                 :label="$t('Client enterprise')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
 
               <v-autocomplete
@@ -159,7 +151,6 @@
                 v-model="item.department"
                 :label="$t('Client department')"
                 prepend-inner-icon=" "
-                class="icon-small"
               />
             </v-card-text>
 
@@ -175,7 +166,6 @@
                 type="text"
                 :label="$t('Client fullname')"
                 prepend-inner-icon="mdi-account-circle-outline"
-                class="icon-small"
               />
               <v-autocomplete
                 dense
@@ -188,7 +178,6 @@
                 v-model="item.position"
                 :label="$t('Client position')"
                 prepend-inner-icon="mdi-briefcase-account-outline"
-                class="icon-small"
               />
 
               <v-text-field
@@ -199,7 +188,6 @@
                 type="text"
                 :label="$t('Client phone')"
                 prepend-inner-icon="mdi-phone-outline"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -215,7 +203,6 @@
                 type="text"
                 :label="$t('Client autoanswer')"
                 prepend-inner-icon="mdi-swap-horizontal"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -231,7 +218,6 @@
                 type="text"
                 :label="$t('Internet mail number')"
                 prepend-inner-icon="mdi-email-outline"
-                class="icon-small"
               />
 
               <CustomDatePicker
@@ -253,7 +239,6 @@
                 v-model="item.internet_comment"
                 :label="$t('Comment')"
                 prepend-inner-icon="mdi-text-box-outline"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -270,7 +255,6 @@
                 v-model="item.comment"
                 :label="$t('Comment')"
                 prepend-inner-icon="mdi-text-box-outline"
-                class="icon-small"
               />
             </v-card-text>
 
@@ -728,9 +712,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.icon-small .v-icon {
-  font-size: 18px !important;
-}
-</style>
