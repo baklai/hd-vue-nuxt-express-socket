@@ -16,7 +16,7 @@ export default {
 
   head() {
     return {
-      title: this.apppage.apptitle
+      title: this.$t(this.apppage.apptitle)
     };
   },
 
