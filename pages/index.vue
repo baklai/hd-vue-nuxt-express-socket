@@ -2,7 +2,7 @@
   <v-container fill-height fluid>
     <v-row align="center" no-gutters justify="space-around">
       <v-col cols="10" class="d-flex justify-center">
-        <v-card flat outlined max-width="800" min-width="auto" width="800">
+        <v-card flat outlined max-width="700" min-width="auto" width="700">
           <v-window v-model="tab" vertical>
             <v-window-item :value="1">
               <v-row class="ma-0">
