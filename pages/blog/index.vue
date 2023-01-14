@@ -6,7 +6,7 @@
           <v-card-title class="text-h3 font-weight-bold mb-2">
             {{ article.title }}
           </v-card-title>
-          <v-card-subtitle class="mb-6">
+          <v-card-subtitle class="mb-6 text--primary">
             {{ article.description }} <br />
             <span class="text--secondary" v-if="article.created">
               {{ $t('Author') }}: {{ article.author }}
@@ -17,7 +17,7 @@
             </span>
           </v-card-subtitle>
           <v-card-text>
-            <article v-if="article">
+            <article v-if="article" class="text--primary">
               <nuxt-content :document="article" />
             </article>
           </v-card-text>
