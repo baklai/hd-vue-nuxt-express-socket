@@ -1,8 +1,8 @@
 <template>
-  <v-container full-height>
-    <v-row no-gutters justify="center">
-      <v-col cols="10">
-        <v-card class="pa-2" flat tile>
+  <v-container fill-height fluid class="pa-0">
+    <v-card class="fill-height pa-2" flat tile>
+      <v-row no-gutters justify="center">
+        <v-col cols="10">
           <v-card-title class="text-h3 font-weight-bold mb-2">
             {{ article.title }}
           </v-card-title>
@@ -21,10 +21,9 @@
               <nuxt-content :document="article" />
             </article>
           </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-
+        </v-col>
+      </v-row>
+    </v-card>
     <v-navigation-drawer app clipped right width="300">
       <template v-slot:prepend>
         <v-sheet>
