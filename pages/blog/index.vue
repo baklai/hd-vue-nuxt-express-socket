@@ -41,36 +41,64 @@
             </v-list-item>
           </v-list>
         </v-sheet>
+        <v-text-field
+          flat
+          dense
+          rounded
+          outlined
+          clearable
+          single-line
+          hide-details
+          :value="search"
+          :label="'Поиск документации'"
+          prepend-inner-icon="mdi-magnify"
+          class="my-4 mx-6"
+        />
       </template>
-      <v-text-field
-        flat
-        dense
-        rounded
-        outlined
-        clearable
-        single-line
-        hide-details
-        :value="search"
-        :label="'Поиск документации'"
-        prepend-inner-icon="mdi-magnify"
-        class="my-4 mx-6"
-      />
-      <v-list>
-        <v-list-item
-          link
-          v-for="item in articles"
-          :key="item.slug"
-          class="ml-2"
-          @click="getArticle(item.slug)"
-        >
-          <v-list-item-icon class="mr-4">
-            <v-icon> mdi-sticker-text-outline </v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title> {{ item.title }}</v-list-item-title>
-            <v-list-item-subtitle> {{ item.description }} </v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
+
+      <v-list flat two-line class="ml-2">
+        <v-list-item-group v-for="(item, index) in articles" :key="index">
+          <v-list-item v-if="!item.children" link @click="getArticle(item.path)" class="pl-4">
+            <v-list-item-avatar class="mr-2">
+              <v-icon> mdi-sticker-text-outline </v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title> {{ item.title }} </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ item.description }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-group color="none" v-if="item.children" class="pl-0">
+            <template v-slot:activator>
+              <v-list-item-avatar class="mr-2">
+                <v-icon> mdi-sticker-text-outline </v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title> {{ item.category }} </v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list flat>
+              <v-list-item
+                exact
+                v-for="item in item.children"
+                :key="item.path"
+                @click="getArticle(item.path)"
+                class="ml-0 pl-4"
+              >
+                <v-list-item-avatar class="mr-2">
+                  <v-icon> mdi-sticker-text-outline </v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title> {{ item.title }} </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ item.description }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-list-group>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </v-container>
@@ -84,18 +112,26 @@ export default {
     appsubtitle: 'Blog of the technical support department'
   },
 
-  // middleware: ['is-scope'],
-
   layout: 'apps',
 
   async asyncData({ $content }) {
-    const articles = await $content('articles')
-      .only(['title', 'description', 'category', 'slug'])
+    const articles = await $content('articles', { deep: true })
+      .only(['title', 'description', 'category', 'slug', 'path'])
       .sortBy('position')
       .fetch();
     const article = await $content('index').fetch();
-
-    return { article, articles };
+    const groupArticles = articles.reduce((group, arr) => {
+      const { category } = arr;
+      group[category] = group[category] ?? [];
+      group[category].push(arr);
+      return group;
+    }, {});
+    const articlesArr = [];
+    Object.entries(groupArticles).forEach(([key, value]) => {
+      if (key === 'null') articlesArr.push(...value);
+      else articlesArr.push({ category: key, children: value });
+    });
+    return { article, articles: articlesArr };
   },
 
   data() {
@@ -117,8 +153,8 @@ export default {
   },
 
   methods: {
-    async getArticle(slug) {
-      this.article = await this.$content(`articles/${slug}`).fetch();
+    async getArticle(article) {
+      this.article = await this.$content(article).fetch();
     }
   }
 };
