@@ -58,17 +58,6 @@
 
       <v-list flat two-line class="ml-2">
         <v-list-item-group v-for="(item, index) in articles" :key="index">
-          <v-list-item v-if="!item.children" link @click="getArticle(item.path)" class="pl-4">
-            <v-list-item-avatar class="mr-2">
-              <v-icon> mdi-sticker-text-outline </v-icon>
-            </v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title> {{ item.title }} </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ item.description }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
           <v-list-group color="none" v-if="item.children" class="pl-0">
             <template v-slot:activator>
               <v-list-item-avatar class="mr-2">
@@ -82,7 +71,7 @@
               <v-list-item
                 exact
                 v-for="item in item.children"
-                :key="item.path"
+                :key="item.slug"
                 @click="getArticle(item.path)"
                 class="ml-0 pl-4"
               >
@@ -98,6 +87,17 @@
               </v-list-item>
             </v-list>
           </v-list-group>
+          <v-list-item v-else link @click="getArticle(item.path)" class="pl-4">
+            <v-list-item-avatar class="mr-2">
+              <v-icon> mdi-sticker-text-outline </v-icon>
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title> {{ item.title }} </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ item.description }}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -115,23 +115,25 @@ export default {
   layout: 'apps',
 
   async asyncData({ $content }) {
-    const articles = await $content('articles', { deep: true })
-      .only(['title', 'description', 'category', 'slug', 'path'])
-      .sortBy('position')
-      .fetch();
-    const article = await $content('index').fetch();
-    const groupArticles = articles.reduce((group, arr) => {
-      const { category } = arr;
-      group[category] = group[category] ?? [];
-      group[category].push(arr);
-      return group;
-    }, {});
-    const articlesArr = [];
-    Object.entries(groupArticles).forEach(([key, value]) => {
-      if (key === 'null') articlesArr.push(...value);
-      else articlesArr.push({ category: key, children: value });
-    });
-    return { article, articles: articlesArr };
+    try {
+      const articles = await $content({ deep: true })
+        .only(['title', 'description', 'category', 'slug', 'path'])
+        .sortBy('position')
+        .fetch();
+      const article = await $content('index').fetch();
+      const groupArticles = articles.reduce((group, arr) => {
+        const { category } = arr;
+        group[category] = group[category] ?? [];
+        group[category].push(arr);
+        return group;
+      }, {});
+      const articlesArr = [];
+      Object.entries(groupArticles).forEach(([key, value]) => {
+        if (key === 'undefined' || key === 'null' || key === '') articlesArr.push(...value);
+        else articlesArr.push({ category: key, children: value });
+      });
+      return { article, articles: articlesArr };
+    } catch (err) {}
   },
 
   data() {
@@ -153,8 +155,8 @@ export default {
   },
 
   methods: {
-    async getArticle(article) {
-      this.article = await this.$content(article).fetch();
+    async getArticle(path) {
+      this.article = await this.$content(...path.split('/').filter((item) => item)).fetch();
     }
   }
 };
