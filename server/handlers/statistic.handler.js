@@ -369,54 +369,57 @@ module.exports = (io, socket) => {
           $project: {
             _id: 0,
             warnings: {
-              share: {
-                $cond: {
-                  if: {
-                    $gt: [
-                      {
-                        $size: {
-                          $setIntersection: ['$share.Type', [0]]
-                        }
-                      },
-                      0
-                    ]
-                  },
-                  then: true,
-                  else: false
-                }
-              },
-              useraccount: {
-                $cond: {
-                  if: {
-                    $gt: [
-                      {
-                        $size: {
-                          $setIntersection: ['$useraccount.Name', '$useradmin']
-                        }
-                      },
-                      0
-                    ]
-                  },
-                  then: true,
-                  else: false
-                }
-              },
-              product: {
-                $cond: {
-                  if: {
-                    $gt: [
-                      {
-                        $size: {
-                          $setIntersection: ['$product.Name', ['USB Disk Security']]
-                        }
-                      },
-                      0
-                    ]
-                  },
-                  then: true,
-                  else: false
-                }
-              }
+              share: 0,
+              // {
+              //   $cond: {
+              //     if: {
+              //       $gt: [
+              //         {
+              //           $size: {
+              //             $setIntersection: ['$share.Type', [0]]
+              //           }
+              //         },
+              //         0
+              //       ]
+              //     },
+              //     then: true,
+              //     else: false
+              //   }
+              // }
+              useraccount: 0,
+              // {
+              //   $cond: {
+              //     if: {
+              //       $gt: [
+              //         {
+              //           $size: {
+              //             $setIntersection: ['$useraccount.Name', '$useradmin']
+              //           }
+              //         },
+              //         0
+              //       ]
+              //     },
+              //     then: true,
+              //     else: false
+              //   }
+              // }
+              product: 0
+              // {
+              //   $cond: {
+              //     if: {
+              //       $gt: [
+              //         {
+              //           $size: {
+              //             $setIntersection: ['$product.Name', ['USB Disk Security']]
+              //           }
+              //         },
+              //         0
+              //       ]
+              //     },
+              //     then: true,
+              //     else: false
+              //   }
+              // }
             }
           }
         },
