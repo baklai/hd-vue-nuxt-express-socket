@@ -4,8 +4,6 @@ Web Application of technical support department.
 
 <img src="/static/img/social-preview.png">
 
-## Demo application: [Helpdesk service](https://helpdesk-service.onrender.com)
-
 Login to the application
 
 ```bash
